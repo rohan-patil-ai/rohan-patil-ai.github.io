@@ -21,14 +21,20 @@
             --border: #222;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* Hide Default Cursor only on non-touch devices to prevent mobile issues */
+        @media (hover: hover) {
+            * { cursor: none; }
+        }
 
         body {
             background-color: var(--bg);
             color: var(--text);
             font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-            width: 100vw;
+            overflow-x: hidden; /* Prevents horizontal scroll */
+            width: 100%;
+            -webkit-font-smoothing: antialiased;
         }
 
         html { scroll-behavior: smooth; }
@@ -40,14 +46,26 @@
             background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MDAiIGhlaWdodD0iNTAwIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuNjUiIG51bSBPY3RhdmVzPSIzIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI25vaXNlKSIgb3BhY2l0eT0iMSIvPjwvc3ZnPg==');
         }
 
+        #cursor, #spotlight {
+            position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
+        }
+
         #cursor {
-            position: fixed; top: 0; left: 0; width: 20px; height: 20px;
-            background: var(--accent); border-radius: 50%; pointer-events: none;
-            z-index: 9999; transform: translate(-50%, -50%);
+            width: 20px; height: 20px;
+            background: var(--accent); border-radius: 50%;
+            transform: translate(-50%, -50%);
             transition: width 0.3s, height 0.3s, background-color 0.3s;
             mix-blend-mode: difference;
+            display: none; /* Hidden by default, shown via JS if mouse detected */
         }
+        
         #cursor.hovered { width: 80px; height: 80px; background: white; mix-blend-mode: difference; }
+
+        #spotlight {
+            width: 100vw; height: 100vh; z-index: -1;
+            background: radial-gradient(600px circle at var(--x) var(--y), rgba(204, 255, 0, 0.04), transparent 40%);
+            display: none; /* Hidden by default */
+        }
 
         /* --- TYPOGRAPHY --- */
         h1, h2, h3, .brand { font-family: 'Syne', sans-serif; text-transform: uppercase; }
@@ -68,21 +86,21 @@
         }
         .contact-btn:hover { background: var(--accent); color: #000; }
 
-        /* --- HERO (Compact to show Marquee) --- */
+        /* --- HERO --- */
         .hero {
-            min-height: 75vh; /* Reduced height to pull marquee up */
+            min-height: 80vh; 
             display: flex; flex-direction: column; justify-content: center;
-            padding: 100px 5% 40px 5%; position: relative; id="top";
+            padding: 120px 5% 40px 5%; position: relative; id="top";
         }
         .hero-name {
-            font-size: clamp(3rem, 8vw, 6rem);
+            font-size: clamp(2.5rem, 8vw, 6rem); /* Responsive Font */
             font-family: 'Syne', sans-serif; font-weight: 800;
             color: #fff; line-height: 1; margin-bottom: 20px;
         }
         .hero h2 {
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-size: clamp(1.2rem, 4vw, 2.5rem);
             font-weight: 400; color: #aaa; margin-bottom: 30px;
-            max-width: 900px; line-height: 1.2;
+            max-width: 900px; line-height: 1.3;
         }
         .highlight { color: var(--accent); }
 
@@ -90,9 +108,10 @@
         .marquee-container {
             width: 100%; background: var(--accent); color: #000; padding: 12px 0;
             overflow: hidden; transform: rotate(-1.5deg); 
-            margin-top: 20px; margin-bottom: 80px; /* Adjusted spacing */
+            margin-top: 20px; margin-bottom: 80px;
             border-top: 2px solid #fff; border-bottom: 2px solid #fff;
             cursor: pointer;
+            width: 105vw; margin-left: -2.5vw; /* Prevents edge gaps on rotation */
         }
         .marquee-content { display: flex; white-space: nowrap; animation: scroll 25s linear infinite; }
         .marquee-item {
@@ -104,7 +123,7 @@
         /* --- SECTIONS --- */
         section { padding: 0 5%; margin-bottom: 120px; }
         .section-header {
-            font-size: 3rem; margin-bottom: 50px; color: var(--text);
+            font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 40px; color: var(--text);
             border-bottom: 1px solid #333; padding-bottom: 20px;
             display: inline-block;
         }
@@ -117,11 +136,11 @@
         }
         .exp-item:hover { padding-left: 20px; border-color: var(--accent); }
         .date { font-family: 'Syne', sans-serif; color: #888; font-weight: 700; }
-        .role h3 { font-size: 1.8rem; margin-bottom: 5px; }
+        .role h3 { font-size: 1.5rem; margin-bottom: 5px; }
         .role h4 { color: var(--accent); font-family: 'Inter', sans-serif; font-weight: 400; margin-bottom: 15px; }
-        .role p { color: #aaa; max-width: 700px; line-height: 1.6; }
+        .role p { color: #aaa; max-width: 700px; line-height: 1.6; font-size: 0.95rem; }
 
-        /* --- PROJECTS (Bento Grid) --- */
+        /* --- PROJECTS --- */
         .grid {
             display: grid; 
             grid-template-columns: repeat(3, 1fr);
@@ -140,10 +159,9 @@
             box-shadow: 0 0 30px rgba(204, 255, 0, 0.1);
         }
         
-        /* Date Badge Style */
         .card-top {
             display: flex; justify-content: space-between; align-items: start;
-            margin-bottom: 15px;
+            margin-bottom: 15px; flex-wrap: wrap; gap: 10px;
         }
         .date-badge {
             font-family: 'Syne', sans-serif; font-size: 0.75rem; 
@@ -158,7 +176,7 @@
         }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
 
-        .card h3 { font-size: 1.5rem; margin-bottom: 10px; line-height: 1.1; margin-top: 10px; }
+        .card h3 { font-size: 1.4rem; margin-bottom: 10px; line-height: 1.1; margin-top: 10px; }
         .card p { color: #aaa; margin-bottom: 20px; line-height: 1.5; font-size: 0.9rem; }
         
         .tags { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -171,62 +189,54 @@
         }
         .repo-link:hover { color: var(--accent); gap: 12px; }
 
-        /* Specific Card Sizes */
+        /* Grid Spans (Desktop Only) */
         .card-large { grid-column: span 2; grid-row: span 2; }
         .card-tall { grid-row: span 2; }
         .card-wide { grid-column: span 2; }
-        
-        @media (max-width: 900px) {
-            .grid { grid-template-columns: 1fr; }
-            .card-large, .card-tall, .card-wide { grid-column: span 1; grid-row: span 1; }
-        }
 
-        /* --- SKILLS (Text Flip) --- */
-        .skills-container { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
+        /* --- SKILLS --- */
+        .skills-container { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
         
         .skill-pill {
             background: #111; border: 1px solid #333;
-            width: 180px; height: 60px;
+            width: 160px; height: 55px;
             border-radius: 100px; color: #ccc;
             position: relative; overflow: hidden; 
             display: flex; align-items: center; justify-content: center;
             transition: 0.3s;
         }
-        
         .skill-name, .skill-percent {
             position: absolute;
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
             font-family: 'Syne', sans-serif; font-weight: 700;
         }
-
-        .skill-percent {
-            opacity: 0; transform: translateY(20px);
-            color: var(--accent); font-size: 1.5rem;
-        }
-
-        .skill-pill:hover {
-            border-color: var(--accent); background: rgba(204, 255, 0, 0.05);
-        }
-        .skill-pill:hover .skill-name { opacity: 0; transform: translateY(-20px); }
-        .skill-pill:hover .skill-percent { opacity: 1; transform: translateY(0); }
+        .skill-percent { opacity: 0; transform: translateY(20px); color: var(--accent); font-size: 1.3rem; }
+        .skill-pill:hover, .skill-pill:active { border-color: var(--accent); background: rgba(204, 255, 0, 0.05); }
+        .skill-pill:hover .skill-name, .skill-pill:active .skill-name { opacity: 0; transform: translateY(-20px); }
+        .skill-pill:hover .skill-percent, .skill-pill:active .skill-percent { opacity: 1; transform: translateY(0); }
 
         /* --- FOOTER --- */
-        footer { background: #080808; padding: 80px 5%; border-top: 1px solid #222; }
+        footer { background: #080808; padding: 60px 5%; border-top: 1px solid #222; }
         .footer-cta h2 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 30px; }
-        .footer-links { display: flex; gap: 30px; flex-wrap: wrap; }
+        .footer-links { display: flex; gap: 20px; flex-wrap: wrap; flex-direction: column; }
         .f-link { font-size: 1.1rem; color: #666; transition: 0.3s; }
-        .f-link:hover { color: var(--accent); }
-
-        #spotlight {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none; z-index: -1;
-            background: radial-gradient(600px circle at var(--x) var(--y), rgba(204, 255, 0, 0.04), transparent 40%);
-        }
-
-        @media (max-width: 768px) {
-            .hero-name { font-size: 3.5rem; }
-            .hero h2 { font-size: 1.5rem; }
-            .exp-item { grid-template-columns: 1fr; gap: 10px; }
+        
+        /* --- MOBILE OPTIMIZATION --- */
+        @media (max-width: 900px) {
+            .grid { grid-template-columns: 1fr; }
+            .card-large, .card-tall, .card-wide { grid-column: auto; grid-row: auto; }
+            .exp-item { grid-template-columns: 1fr; gap: 10px; padding: 30px 0; }
+            .hero-name { font-size: 3rem; }
+            .hero h2 { font-size: 1.2rem; }
+            .marquee-item { font-size: 1.5rem; margin-right: 30px; }
+            section { margin-bottom: 80px; }
+            .footer-links { gap: 15px; }
+            
+            /* Better Touch Targets */
+            .contact-btn, .repo-link, .f-link { padding: 10px 0; }
+            
+            /* Remove Hover-Only Effects for Touch */
+            .exp-item:hover { padding-left: 0; border-color: var(--border); }
         }
     </style>
 </head>
@@ -248,8 +258,8 @@
             Bridging the gap between <span class="highlight">Research</span> and <br>
             <span class="highlight">Real-World</span> Deployment in AI.
         </h2>
-        <p style="color: #666; font-size: 1rem; max-width: 500px;">
-            MSc Student at THWS • Computer Vision Specialist • RAG Systems Engineer • AI Engineer
+        <p style="color: #666; font-size: 1rem; max-width: 500px; margin-top: 20px;">
+            MSc Student at THWS • Computer Vision Specialist • RAG Systems Engineer
         </p>
     </section>
 
@@ -300,7 +310,7 @@
                 </div>
                 <div>
                     <h3>H.Pylori Detection in Biopsy</h3>
-                    <p>Engineered a hierarchical detection pipeline for 5x5px bacteria in 150K×60K WSI images. Implemented active learning with YOLOv8 and R-CNN, improving mAP50 from 41% to 50% and discovering 300+ correct annotations missed by pathologists.</p>
+                    <p>Engineered a hierarchical detection pipeline for 5x5px bacteria in 150K×60K WSI images. Implemented active learning with YOLOv8 and R-CNN, improving mAP50 from 41% to 50%.</p>
                 </div>
                 <a href="https://github.com/rohan-patil-ai" target="_blank" class="repo-link">View Repository <i class="fas fa-arrow-right"></i></a>
             </div>
@@ -324,8 +334,7 @@
                 </div>
                 <div>
                     <h3>Google Tunix</h3>
-                    <p>Fine tuned Gemma 2B to provide reasoning for GSM8K Data by pushing the Small language model ceiling by 20% using our innovative consensus idea.
-                    </p>
+                    <p>Fine tuned Gemma 2B to provide reasoning for GSM8K Data by pushing the Small language model ceiling by 20%.</p>
                 </div>
                 <a href="https://github.com/rohan-patil-ai/Google-Tunix-Hackathon" target="_blank" class="repo-link">View Repo <i class="fas fa-arrow-right"></i></a>
             </div>
@@ -349,7 +358,7 @@
                 </div>
                 <div>
                     <h3>Blackjack RL Agent</h3>
-                    <p>Simulated 5M hands to benchmark Monte Carlo vs Q-Learning. Improved natural Blackjack win rate by 20% over baseline's 2.29% using Double Q-Learning.</p>
+                    <p>Simulated 5M hands to benchmark Monte Carlo vs Q-Learning. Improved natural Blackjack win rate by 20% over baseline using Double Q-Learning.</p>
                 </div>
                 <a href="https://github.com/rohan-patil-ai/Blackjack21" target="_blank" class="repo-link">View Repo <i class="fas fa-arrow-right"></i></a>
             </div>
@@ -361,7 +370,7 @@
                 </div>
                 <div>
                     <h3>Urban Safety Analysis</h3>
-                    <p>Engineered ensemble framework (k-NN, Random Forest, Extra Trees). Achieved 97% F1-score analyzing historical socio-economic data patterns to predict safety indices.</p>
+                    <p>Engineered ensemble framework (k-NN, Random Forest, Extra Trees). Achieved 97% F1-score analyzing historical socio-economic data.</p>
                 </div>
                 <a href="https://github.com/rohan-patil-ai/SuspectPred" target="_blank" class="repo-link">View Repo <i class="fas fa-arrow-right"></i></a>
             </div>
@@ -378,57 +387,16 @@
     <section id="skills">
         <h2 class="section-header">Expertise</h2>
         <div class="skills-container">
-            
-            <div class="skill-pill hover-target">
-                <span class="skill-name">Computer Vision</span>
-                <span class="skill-percent">90%</span>
-            </div>
-            
-            <div class="skill-pill hover-target">
-                <span class="skill-name">Python</span>
-                <span class="skill-percent">90%</span>
-            </div>
-
-            <div class="skill-pill hover-target">
-                <span class="skill-name">Neural Nets</span>
-                <span class="skill-percent">80%</span>
-            </div>
-
-            <div class="skill-pill hover-target">
-                <span class="skill-name">RAG Systems</span>
-                <span class="skill-percent">85%</span>
-            </div>
-
-            <div class="skill-pill hover-target">
-                <span class="skill-name">PyTorch</span>
-                <span class="skill-percent">90%</span>
-            </div>
-
-            <div class="skill-pill hover-target">
-                <span class="skill-name">Docker</span>
-                <span class="skill-percent">80%</span>
-            </div>
-            
-            <div class="skill-pill hover-target">
-                <span class="skill-name">PowerBI</span>
-                <span class="skill-percent">90%</span>
-            </div>
-
-            <div class="skill-pill hover-target">
-                <span class="skill-name">REST API</span>
-                <span class="skill-percent">75%</span>
-            </div>
-
-            <div class="skill-pill hover-target">
-                <span class="skill-name">SQL</span>
-                <span class="skill-percent">85%</span>
-            </div>
-
-            <div class="skill-pill hover-target">
-                <span class="skill-name">ETL Pipelines</span>
-                <span class="skill-percent">80%</span>
-            </div>
-
+            <div class="skill-pill hover-target"><span class="skill-name">Computer Vision</span><span class="skill-percent">90%</span></div>
+            <div class="skill-pill hover-target"><span class="skill-name">Python</span><span class="skill-percent">90%</span></div>
+            <div class="skill-pill hover-target"><span class="skill-name">Neural Nets</span><span class="skill-percent">80%</span></div>
+            <div class="skill-pill hover-target"><span class="skill-name">RAG Systems</span><span class="skill-percent">85%</span></div>
+            <div class="skill-pill hover-target"><span class="skill-name">PyTorch</span><span class="skill-percent">90%</span></div>
+            <div class="skill-pill hover-target"><span class="skill-name">Docker</span><span class="skill-percent">80%</span></div>
+            <div class="skill-pill hover-target"><span class="skill-name">PowerBI</span><span class="skill-percent">90%</span></div>
+            <div class="skill-pill hover-target"><span class="skill-name">REST API</span><span class="skill-percent">75%</span></div>
+            <div class="skill-pill hover-target"><span class="skill-name">SQL</span><span class="skill-percent">85%</span></div>
+            <div class="skill-pill hover-target"><span class="skill-name">ETL Pipelines</span><span class="skill-percent">80%</span></div>
         </div>
     </section>
 
@@ -442,7 +410,7 @@
             <a href="https://www.linkedin.com/in/rohan-patil18/" target="_blank" class="f-link hover-target">LinkedIn</a>
             <a href="https://github.com/rohan-patil-ai" target="_blank" class="f-link hover-target">GitHub</a>
             
-            <a href="RohanSanjayPatil_CV2026.pdf" download class="f-link hover-target" style="color:var(--accent); border-bottom: 1px solid var(--accent);">
+            <a href="RohanSanjayPatil_CV2026.pdf" download class="f-link hover-target" style="color:var(--accent); border-bottom: 1px solid var(--accent); margin-top: 10px; display:inline-block;">
                 <i class="fas fa-download"></i> Download CV
             </a>
         </div>
@@ -454,22 +422,29 @@
     </footer>
 
     <script>
-        // --- CURSOR & SPOTLIGHT ---
+        // Check if device uses touch (to hide cursor logic)
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
         const cursor = document.getElementById('cursor');
         const spotlight = document.getElementById('spotlight');
         const hoverTargets = document.querySelectorAll('.hover-target');
 
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            spotlight.style.setProperty('--x', e.clientX + 'px');
-            spotlight.style.setProperty('--y', e.clientY + 'px');
-        });
+        // Only enable custom cursor and spotlight if it's NOT a touch device
+        if (!isTouchDevice) {
+            cursor.style.display = 'block';
+            spotlight.style.display = 'block';
 
-        hoverTargets.forEach(target => {
-            target.addEventListener('mouseenter', () => { cursor.classList.add('hovered'); });
-            target.addEventListener('mouseleave', () => { cursor.classList.remove('hovered'); });
-        });
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+                spotlight.style.setProperty('--x', e.clientX + 'px');
+                spotlight.style.setProperty('--y', e.clientY + 'px');
+            });
+
+            hoverTargets.forEach(target => {
+                target.addEventListener('mouseenter', () => { cursor.classList.add('hovered'); });
+                target.addEventListener('mouseleave', () => { cursor.classList.remove('hovered'); });
+            });
+        }
 
         // --- SMOOTH SCROLL ---
         function smoothScroll(target) {
