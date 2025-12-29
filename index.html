@@ -3,384 +3,432 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rohan Sanjay Patil | AI Research</title>
+    <title>Rohan Patil | AI Engineer</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* --- RESET & VARIABLES --- */
+        /* --- CORE SETTINGS --- */
         :root {
-            --bg: #0e0e10;           /* Deep Charcoal */
-            --surface: #18181b;      /* Slightly lighter for cards */
-            --surface-hover: #222226;
-            --text-main: #ededed;    /* Off-white */
-            --text-muted: #a1a1aa;   /* Grey */
-            --accent: #fff;          /* stark white for emphasis */
-            --border: #27272a;       /* Subtle borders */
-            --container: 1000px;     /* Max width */
+            --bg: #0a0a0a;
+            --text: #ffffff;
+            --accent: #ccff00; /* Lando Norris Neon Lime */
+            --card-bg: #141414;
+            --cursor-size: 20px;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
+            cursor: none; /* Hiding default cursor for the custom one */
         }
 
         body {
             background-color: var(--bg);
-            color: var(--text-main);
+            color: var(--text);
             font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            padding: 0 20px;
+            overflow-x: hidden;
+            width: 100vw;
+        }
+
+        /* Noise Texture Overlay for that "Raw" feel */
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.05;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MDAiIGhlaWdodD0iNTAwIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuNjUiIG51bSBPY3RhdmVzPSIzIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI25vaXNlKSIgb3BhY2l0eT0iMSIvPjwvc3ZnPg==');
+        }
+
+        /* --- CUSTOM CURSOR --- */
+        #cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--cursor-size);
+            height: var(--cursor-size);
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+            mix-blend-mode: difference; /* Cool inversion effect */
+        }
+
+        #cursor.hovered {
+            width: 80px;
+            height: 80px;
+            background: white;
+            mix-blend-mode: difference;
         }
 
         /* --- TYPOGRAPHY --- */
-        h1, h2, h3, .logo {
-            font-family: 'Space Grotesk', sans-serif;
-            color: var(--text-main);
-        }
-
-        h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.1;
-            margin-bottom: 24px;
-        }
-
-        h2 {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-            font-weight: 500;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 10px;
-            display: inline-block;
-        }
-
-        p {
-            color: var(--text-muted);
-            margin-bottom: 16px;
+        h1, h2, h3, .brand {
+            font-family: 'Syne', sans-serif;
+            text-transform: uppercase;
         }
 
         a {
-            color: inherit;
             text-decoration: none;
-            transition: 0.2s;
+            color: inherit;
         }
 
-        /* --- LAYOUT --- */
-        .container {
-            max-width: var(--container);
-            margin: 0 auto;
-            padding: 80px 0;
-        }
-
-        header {
-            margin-bottom: 100px;
-            animation: fadeIn 1s ease-out;
-        }
-
-        section {
-            margin-bottom: 100px;
-        }
-
-        /* --- NAV (Minimal) --- */
+        /* --- NAV --- */
         nav {
             display: flex;
             justify-content: space-between;
-            padding: 30px 0;
             align-items: center;
+            padding: 40px 5%;
+            position: relative;
+            z-index: 10;
         }
 
-        .logo {
-            font-weight: 700;
-            font-size: 1.2rem;
-            letter-spacing: -0.05em;
+        .brand {
+            font-size: 1.5rem;
+            font-weight: 800;
         }
 
-        .socials a {
-            margin-left: 20px;
+        .nav-links a {
+            margin-left: 30px;
             font-size: 0.9rem;
-            color: var(--text-muted);
+            font-weight: 500;
+            position: relative;
         }
 
-        .socials a:hover {
-            color: var(--accent);
-            text-decoration: underline;
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 5%;
+            position: relative;
         }
 
-        /* --- HERO --- */
-        .hero-tag {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 16px;
+        .hero h1 {
+            font-size: clamp(3rem, 9vw, 8rem);
+            line-height: 0.9;
+            font-weight: 800;
+        }
+
+        .hero h1 span {
             display: block;
-            font-family: 'Space Grotesk', sans-serif;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255,255,255,0.5);
+            transition: 0.5s;
         }
 
-        .highlight {
+        .hero h1 span:hover {
             color: var(--accent);
-            border-bottom: 1px solid #444;
+            -webkit-text-stroke: 0px;
+            transform: skewX(-10deg);
         }
 
-        /* --- GRID SYSTEM (Bento Box) --- */
+        .hero p {
+            max-width: 500px;
+            margin-top: 30px;
+            font-size: 1.1rem;
+            color: #aaa;
+        }
+
+        /* --- MARQUEE (SCROLLING TEXT) --- */
+        .marquee-container {
+            width: 100%;
+            overflow: hidden;
+            background: var(--accent);
+            color: var(--bg);
+            padding: 20px 0;
+            transform: rotate(-2deg) scale(1.05); /* Jaunty angle */
+            margin: 50px 0 100px 0;
+        }
+
+        .marquee-content {
+            white-space: nowrap;
+            display: flex;
+            animation: scroll 20s linear infinite;
+        }
+
+        .marquee-item {
+            font-family: 'Syne', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-right: 60px;
+            text-transform: uppercase;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* --- PROJECTS GRID --- */
+        .section-title {
+            padding: 0 5%;
+            font-size: 4rem;
+            margin-bottom: 50px;
+            color: var(--accent);
+        }
+
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 0 5%;
+            margin-bottom: 100px;
         }
 
         .card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            padding: 32px;
-            border-radius: 4px;
-            transition: transform 0.2s, border-color 0.2s, background 0.2s;
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
         .card:hover {
-            transform: translateY(-4px);
-            border-color: #444;
-            background: var(--surface-hover);
-        }
-
-        .card-header {
-            margin-bottom: 20px;
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--accent);
+            box-shadow: 0 0 30px rgba(204, 255, 0, 0.1);
         }
 
         .card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 8px;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            line-height: 1;
         }
 
-        .tag-container {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-bottom: 16px;
+        .card p {
+            font-size: 0.95rem;
+            color: #bbb;
+            margin-bottom: 20px;
+        }
+
+        .tags {
+            margin-top: auto;
         }
 
         .tag {
             font-size: 0.75rem;
-            border: 1px solid #333;
-            padding: 4px 10px;
-            border-radius: 100px;
-            color: var(--text-muted);
+            border: 1px solid #444;
+            padding: 5px 12px;
+            border-radius: 50px;
+            margin-right: 5px;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        .card:hover .tag {
+            border-color: var(--accent);
+            color: var(--accent);
         }
 
         .card-link {
-            font-size: 0.9rem;
-            font-weight: 500;
-            margin-top: auto;
-            display: inline-block;
-        }
-
-        .card-link::after {
-            content: " →";
-        }
-
-        /* Featured card spans full width on larger screens */
-        .featured {
-            grid-column: 1 / -1;
-        }
-
-        /* --- EXPERIENCE LIST --- */
-        .job-item {
-            display: grid;
-            grid-template-columns: 120px 1fr;
-            margin-bottom: 40px;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 40px;
-        }
-
-        .job-item:last-child {
-            border-bottom: none;
-        }
-
-        .job-date {
-            font-family: 'Space Grotesk', sans-serif;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .job-details h3 {
-            margin-bottom: 4px;
-        }
-
-        .job-details h4 {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            margin-bottom: 12px;
-            font-weight: 400;
-        }
-
-        /* --- SKILLS --- */
-        .skills-list {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border: 1px solid #555;
+            border-radius: 50%;
             display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
         }
 
-        .skill-pill {
-            background: var(--surface);
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            border: 1px solid var(--border);
+        .card:hover .card-link {
+            background: var(--accent);
+            color: var(--bg);
+            border-color: var(--accent);
+            transform: rotate(-45deg);
         }
+
+        /* Featured card spans 2 columns */
+        .featured {
+            grid-column: span 2;
+        }
+        @media (max-width: 768px) { .featured { grid-column: span 1; } }
 
         /* --- FOOTER --- */
         footer {
-            border-top: 1px solid var(--border);
-            padding: 40px 0;
             text-align: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-top: 80px;
+            padding: 100px 0;
+            border-top: 1px solid #333;
+            background: #050505;
+        }
+        
+        .big-link {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 800;
+            color: #333;
+            transition: 0.3s;
         }
 
-        /* --- ANIMATIONS --- */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .big-link:hover {
+            color: var(--accent);
         }
 
-        /* --- MOBILE --- */
-        @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .job-item { grid-template-columns: 1fr; gap: 10px; }
-            .featured { grid-column: auto; }
+        /* --- MOUSE SPOTLIGHT EFFECT --- */
+        #spotlight {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+            background: radial-gradient(600px circle at var(--x) var(--y), rgba(204, 255, 0, 0.06), transparent 40%);
         }
+
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <nav>
-            <div class="logo">RSP.</div>
-            <div class="socials">
-                <a href="#work">Work</a>
-                <a href="#projects">Research</a>
-                <a href="https://github.com/rohan-patil-ai" target="_blank">GitHub</a>
-                <a href="https://www.linkedin.com/in/rohan-patil18/" target="_blank">LinkedIn</a>
-            </div>
-        </nav>
+    <div class="noise"></div>
+    <div id="cursor"></div>
+    <div id="spotlight"></div>
 
-        <header>
-            <span class="hero-tag">MSc Artificial Intelligence at THWS</span>
-            <h1>Bridging the gap between <br><span class="highlight">Research</span> and Deployment.</h1>
-            <p style="max-width: 600px; font-size: 1.1rem;">
-                I am Rohan Patil. I specialize in high-scale Computer Vision, RAG systems, and processing high-resolution medical imaging. My focus is building ML pipelines that work in the real world.
-            </p>
-        </header>
+    <nav>
+        <div class="brand hover-target">RSP.</div>
+        <div class="nav-links">
+            <a href="https://github.com/rohan-patil-ai" target="_blank" class="hover-target">GitHub</a>
+            <a href="https://www.linkedin.com/in/rohan-patil18/" target="_blank" class="hover-target">LinkedIn</a>
+        </div>
+    </nav>
 
-        <section id="work">
-            <h2>Experience</h2>
-            
-            <div class="job-item">
-                <div class="job-date">Present</div>
-                <div class="job-details">
-                    <h3>Student Assistant (HiWi)</h3>
-                    <h4>Julius Maximilians Universität | Würzburg, DE</h4>
-                    <p>Implementing RAG systems to digitalize workflows for German startups, enabling semantic search across documents. Building ETL pipelines to structure knowledge bases for LLM integration and developing web interfaces using React and Flask.</p>
-                </div>
-            </div>
+    <header class="hero">
+        <h1>
+            The gap between <br>
+            <span>RESEARCH</span> 
+            and <br>
+            <span>REALITY.</span>
+        </h1>
+        <p>I am Rohan Patil. I build high-scale Computer Vision systems, crush RAG pipelines, and find 5x5px bacteria in massive images.</p>
+    </header>
 
-            <div class="job-item">
-                <div class="job-date">2024</div>
-                <div class="job-details">
-                    <h3>ML & Research Intern</h3>
-                    <h4>Compsoft Technologies | Bangalore, India</h4>
-                    <p>Benchmarked 6 OCR engines across 8 document types. Built a Python pipeline processing 5,000+ records/run, reducing manual entry by 85%. Identified critical defects in Automated Parking Systems.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="projects">
-            <h2>Selected Research & Projects</h2>
-            <div class="grid">
-                
-                <div class="card featured">
-                    <div class="card-header">
-                        <div class="tag-container">
-                            <span class="tag">Master's Project</span>
-                            <span class="tag">Computer Vision</span>
-                            <span class="tag">YOLOv8</span>
-                        </div>
-                        <h3>H.Pylori Detection in Veterinary Biopsy</h3>
-                        <p>Engineered a hierarchical detection pipeline for 5x5px bacteria in 150K×60K WSI images. Implemented active learning with YOLOv8 and R-CNN, improving mAP50 from 41% to 50% and discovering 300+ correct annotations missed by pathologists.</p>
-                    </div>
-                    <a href="https://github.com/rohan-patil-ai" class="card-link">View Repository</a>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="tag-container">
-                            <span class="tag">RAG</span>
-                            <span class="tag">LLMs</span>
-                        </div>
-                        <h3>BMW Lessons Learned System</h3>
-                        <p>Developed a RAG system structuring 1,000+ incident reports for semantic search. Implemented hybrid retrieval (Database+API) and analytics dashboards.</p>
-                    </div>
-                    <a href="https://github.com/rohan-patil-ai" class="card-link">View Repository</a>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="tag-container">
-                            <span class="tag">Reinforcement Learning</span>
-                        </div>
-                        <h3>Blackjack RL Simulation</h3>
-                        <p>Simulated 5M hands to benchmark Monte Carlo vs Q-Learning. Improved win rate from 2.29% to 2.75% using Double Q-Learning.</p>
-                    </div>
-                    <a href="https://github.com/rohan-patil-ai" class="card-link">View Repository</a>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="tag-container">
-                            <span class="tag">Ensemble Learning</span>
-                            <span class="tag">Scikit-learn</span>
-                        </div>
-                        <h3>Urban Safety Pattern Analysis</h3>
-                        <p>Bachelor's Final Project. Achieved 97% F1-score analyzing socio-economic data patterns using Random Forest and Extra Trees.</p>
-                    </div>
-                    <a href="https://github.com/rohan-patil-ai" class="card-link">View Repository</a>
-                </div>
-
-            </div>
-        </section>
-
-        <section>
-            <h2>Technical Stack</h2>
-            <div class="skills-list">
-                <span class="skill-pill">PyTorch</span>
-                <span class="skill-pill">Computer Vision</span>
-                <span class="skill-pill">RAG Systems</span>
-                <span class="skill-pill">YOLOv8</span>
-                <span class="skill-pill">Docker</span>
-                <span class="skill-pill">ETL Pipelines</span>
-                <span class="skill-pill">SQL</span>
-                <span class="skill-pill">Python</span>
-                <span class="skill-pill">C++</span>
-                <span class="skill-pill">React</span>
-            </div>
-        </section>
-
-        <footer>
-            <p>© 2026 Rohan Sanjay Patil. <br> <a href="mailto:rohanpatilrsp@gmail.com">rohanpatilrsp@gmail.com</a></p>
-        </footer>
+    <div class="marquee-container">
+        <div class="marquee-content">
+            <div class="marquee-item">Computer Vision • RAG Systems • PyTorch • Reinforcement Learning • Data Engineering • </div>
+            <div class="marquee-item">Computer Vision • RAG Systems • PyTorch • Reinforcement Learning • Data Engineering • </div>
+        </div>
     </div>
 
+    <section>
+        <h2 class="section-title">The Lab</h2>
+        <div class="grid">
+            
+            <div class="card featured hover-target">
+                <a href="https://github.com/rohan-patil-ai" class="card-link"><i class="fas fa-arrow-right">-></i></a>
+                <div>
+                    <h3>H.Pylori Detection</h3>
+                    <p>Engineered a hierarchical detection pipeline for 5x5px bacteria in 150K×60K WSI images. Improved mAP50 to 50% using YOLOv8 & Active Learning.</p>
+                </div>
+                <div class="tags">
+                    <span class="tag">Master's Project</span>
+                    <span class="tag">Computer Vision</span>
+                    <span class="tag">YOLOv8</span>
+                </div>
+            </div>
+
+            <div class="card hover-target">
+                <a href="https://github.com/rohan-patil-ai" class="card-link"><i class="fas fa-arrow-right">-></i></a>
+                <div>
+                    <h3>BMW RAG System</h3>
+                    <p>Structured 1,000+ incident reports for semantic search. Built with Hybrid Retrieval (DB + API).</p>
+                </div>
+                <div class="tags">
+                    <span class="tag">RAG</span>
+                    <span class="tag">LLMs</span>
+                    <span class="tag">Plotly</span>
+                </div>
+            </div>
+
+            <div class="card hover-target">
+                <a href="https://github.com/rohan-patil-ai" class="card-link"><i class="fas fa-arrow-right">-></i></a>
+                <div>
+                    <h3>Blackjack RL</h3>
+                    <p>Simulated 5 Million hands to beat the house. Double Q-Learning improved win rate to 2.75%.</p>
+                </div>
+                <div class="tags">
+                    <span class="tag">Reinforcement Learning</span>
+                    <span class="tag">Simulation</span>
+                </div>
+            </div>
+
+            <div class="card hover-target">
+                <a href="https://github.com/rohan-patil-ai" class="card-link"><i class="fas fa-arrow-right">-></i></a>
+                <div>
+                    <h3>Urban Safety</h3>
+                    <p>97% F1-score analyzing socio-economic data patterns using Random Forest Ensembles.</p>
+                </div>
+                <div class="tags">
+                    <span class="tag">Scikit-learn</span>
+                    <span class="tag">Data Analysis</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <p style="margin-bottom:20px; color: #555;">Ready to collaborate?</p>
+        <a href="mailto:rohanpatilrsp@gmail.com" class="big-link hover-target">ROHANPATILRSP@GMAIL.COM</a>
+        <p style="margin-top: 50px; font-size: 0.8rem; color: #333;">© 2026 Rohan Patil</p>
+    </footer>
+
+    <script>
+        // --- CUSTOM CURSOR & SPOTLIGHT LOGIC ---
+        const cursor = document.getElementById('cursor');
+        const spotlight = document.getElementById('spotlight');
+        const hoverTargets = document.querySelectorAll('.hover-target');
+
+        document.addEventListener('mousemove', (e) => {
+            // Move cursor
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+
+            // Move spotlight
+            spotlight.style.setProperty('--x', e.clientX + 'px');
+            spotlight.style.setProperty('--y', e.clientY + 'px');
+        });
+
+        // Add hover effect to links/cards
+        hoverTargets.forEach(target => {
+            target.addEventListener('mouseenter', () => {
+                cursor.classList.add('hovered');
+            });
+            target.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hovered');
+            });
+        });
+
+        // Add slight parallax tilt to cards (Optional fun)
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                card.style.setProperty('--x', `${x}px`);
+                card.style.setProperty('--y', `${y}px`);
+            });
+        });
+    </script>
 </body>
 </html>
