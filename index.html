@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -16,6 +16,7 @@
             --bg: #050505;
             --card-bg: #111;
             --text: #ffffff;
+            --text-muted: #888;
             --accent: #ccff00; /* Neon Lime */
             --border: #222;
         }
@@ -55,7 +56,7 @@
         /* --- NAV --- */
         nav {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 30px 5%; position: fixed; top: 0; width: 100%; z-index: 1000;
+            padding: 25px 5%; position: fixed; top: 0; width: 100%; z-index: 1000;
             background: rgba(5,5,5,0.85); backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
@@ -67,10 +68,11 @@
         }
         .contact-btn:hover { background: var(--accent); color: #000; }
 
-        /* --- HERO --- */
+        /* --- HERO (Compact to show Marquee) --- */
         .hero {
-            height: 90vh; display: flex; flex-direction: column; justify-content: center;
-            padding: 0 5%; position: relative; id="top";
+            min-height: 75vh; /* Reduced height to pull marquee up */
+            display: flex; flex-direction: column; justify-content: center;
+            padding: 100px 5% 40px 5%; position: relative; id="top";
         }
         .hero-name {
             font-size: clamp(3rem, 8vw, 6rem);
@@ -87,11 +89,12 @@
         /* --- MARQUEE --- */
         .marquee-container {
             width: 100%; background: var(--accent); color: #000; padding: 12px 0;
-            overflow: hidden; transform: rotate(-2deg); margin-bottom: 100px;
+            overflow: hidden; transform: rotate(-1.5deg); 
+            margin-top: 20px; margin-bottom: 80px; /* Adjusted spacing */
             border-top: 2px solid #fff; border-bottom: 2px solid #fff;
             cursor: pointer;
         }
-        .marquee-content { display: flex; white-space: nowrap; animation: scroll 20s linear infinite; }
+        .marquee-content { display: flex; white-space: nowrap; animation: scroll 25s linear infinite; }
         .marquee-item {
             font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800;
             margin-right: 60px; text-transform: uppercase;
@@ -118,11 +121,11 @@
         .role h4 { color: var(--accent); font-family: 'Inter', sans-serif; font-weight: 400; margin-bottom: 15px; }
         .role p { color: #aaa; max-width: 700px; line-height: 1.6; }
 
-        /* --- PROJECTS (Bento/Mosaic Grid) --- */
+        /* --- PROJECTS (Bento Grid) --- */
         .grid {
             display: grid; 
-            grid-template-columns: repeat(3, 1fr); /* 3 Columns Desktop */
-            grid-auto-rows: minmax(250px, auto);
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: minmax(280px, auto);
             gap: 1.5rem;
         }
 
@@ -136,34 +139,54 @@
             transform: translateY(-5px); border-color: var(--accent);
             box-shadow: 0 0 30px rgba(204, 255, 0, 0.1);
         }
-        .card h3 { font-size: 1.5rem; margin-bottom: 10px; line-height: 1.1; }
+        
+        /* Date Badge Style */
+        .card-top {
+            display: flex; justify-content: space-between; align-items: start;
+            margin-bottom: 15px;
+        }
+        .date-badge {
+            font-family: 'Syne', sans-serif; font-size: 0.75rem; 
+            font-weight: 700; color: #fff; background: #222;
+            padding: 5px 10px; border-radius: 4px; border: 1px solid #333;
+        }
+        .live-dot {
+            display: inline-block; width: 6px; height: 6px; 
+            background: var(--accent); border-radius: 50%; margin-right: 5px;
+            box-shadow: 0 0 5px var(--accent);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
+        .card h3 { font-size: 1.5rem; margin-bottom: 10px; line-height: 1.1; margin-top: 10px; }
         .card p { color: #aaa; margin-bottom: 20px; line-height: 1.5; font-size: 0.9rem; }
-        .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 15px; }
+        
+        .tags { display: flex; flex-wrap: wrap; gap: 6px; }
         .tag { font-size: 0.7rem; border: 1px solid #444; padding: 4px 10px; border-radius: 50px; color: #888; }
         .card:hover .tag { border-color: var(--accent); color: var(--accent); }
+        
         .repo-link {
             margin-top: auto; font-size: 0.9rem; font-weight: 600;
             display: inline-flex; align-items: center; gap: 8px; transition: 0.3s;
         }
         .repo-link:hover { color: var(--accent); gap: 12px; }
 
-        /* Specific Card Sizes for Variety */
-        .card-large { grid-column: span 2; grid-row: span 2; } /* Big feature */
-        .card-tall { grid-row: span 2; } /* Tall vertical */
-        .card-wide { grid-column: span 2; } /* Wide horizontal */
+        /* Specific Card Sizes */
+        .card-large { grid-column: span 2; grid-row: span 2; }
+        .card-tall { grid-row: span 2; }
+        .card-wide { grid-column: span 2; }
         
-        /* Mobile Reset */
         @media (max-width: 900px) {
             .grid { grid-template-columns: 1fr; }
             .card-large, .card-tall, .card-wide { grid-column: span 1; grid-row: span 1; }
         }
 
-        /* --- SKILLS (The Flip Effect) --- */
+        /* --- SKILLS (Text Flip) --- */
         .skills-container { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
         
         .skill-pill {
             background: #111; border: 1px solid #333;
-            width: 180px; height: 60px; /* Fixed size prevents jumping */
+            width: 180px; height: 60px;
             border-radius: 100px; color: #ccc;
             position: relative; overflow: hidden; 
             display: flex; align-items: center; justify-content: center;
@@ -173,35 +196,23 @@
         .skill-name, .skill-percent {
             position: absolute;
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
-            font-family: 'Syne', sans-serif;
-            font-weight: 700;
+            font-family: 'Syne', sans-serif; font-weight: 700;
         }
 
         .skill-percent {
-            opacity: 0;
-            transform: translateY(20px); /* Start slightly below */
-            color: var(--accent);
-            font-size: 1.5rem;
+            opacity: 0; transform: translateY(20px);
+            color: var(--accent); font-size: 1.5rem;
         }
 
         .skill-pill:hover {
-            border-color: var(--accent);
-            background: rgba(204, 255, 0, 0.05);
+            border-color: var(--accent); background: rgba(204, 255, 0, 0.05);
         }
-
-        .skill-pill:hover .skill-name {
-            opacity: 0;
-            transform: translateY(-20px); /* Move up and vanish */
-        }
-
-        .skill-pill:hover .skill-percent {
-            opacity: 1;
-            transform: translateY(0); /* Move into center */
-        }
+        .skill-pill:hover .skill-name { opacity: 0; transform: translateY(-20px); }
+        .skill-pill:hover .skill-percent { opacity: 1; transform: translateY(0); }
 
         /* --- FOOTER --- */
         footer { background: #080808; padding: 80px 5%; border-top: 1px solid #222; }
-        .footer-cta h2 { font-size: 3rem; margin-bottom: 30px; }
+        .footer-cta h2 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 30px; }
         .footer-links { display: flex; gap: 30px; flex-wrap: wrap; }
         .f-link { font-size: 1.1rem; color: #666; transition: 0.3s; }
         .f-link:hover { color: var(--accent); }
@@ -259,18 +270,18 @@
         <div class="exp-item hover-target">
             <div class="date">Present</div>
             <div class="role">
-                [cite_start]<h3>Student Assistant (HiWi) [cite: 28]</h3>
+                <h3>Student Assistant (HiWi)</h3>
                 <h4>Julius Maximilians Universität | Würzburg, DE</h4>
-                <p>Implementing RAG systems to digitalize workflows for German startups. [cite_start]Building ETL pipelines to structure knowledge bases for LLM integration[cite: 29, 30].</p>
+                <p>Implementing RAG systems to digitalize workflows for German startups. Building ETL pipelines to structure knowledge bases for LLM integration.</p>
             </div>
         </div>
 
         <div class="exp-item hover-target">
             <div class="date">2024</div>
             <div class="role">
-                [cite_start]<h3>ML & Research Intern [cite: 32]</h3>
+                <h3>ML & Research Intern</h3>
                 <h4>Compsoft Technologies | Bangalore, IN</h4>
-                <p>Benchmarked 6 OCR engines across 8 document types. [cite_start]Built Python pipeline processing 5,000+ records/run, reducing manual entry by 85%[cite: 33, 34].</p>
+                <p>Benchmarked 6 OCR engines across 8 document types. Built Python pipeline processing 5,000+ records/run, reducing manual entry by 85%.</p>
             </div>
         </div>
     </section>
@@ -280,33 +291,38 @@
         <div class="grid">
             
             <div class="card card-large hover-target">
-                <div>
+                <div class="card-top">
                     <div class="tags">
-                        [cite_start]<span class="tag">Master's Project [cite: 37]</span>
+                        <span class="tag">Master's Project</span>
                         <span class="tag">YOLOv8</span>
-                        <span class="tag">Active Learning</span>
                     </div>
+                    <span class="date-badge"><span class="live-dot"></span>In Progress</span>
+                </div>
+                <div>
                     <h3>H.Pylori Detection in Biopsy</h3>
-                    <p>Engineered a hierarchical detection pipeline for 5x5px bacteria in 150K×60K WSI images. [cite_start]Implemented active learning with YOLOv8 and R-CNN, improving mAP50 from 41% to 50% and discovering 300+ correct annotations missed by pathologists[cite: 39, 40].</p>
+                    <p>Engineered a hierarchical detection pipeline for 5x5px bacteria in 150K×60K WSI images. Implemented active learning with YOLOv8 and R-CNN, improving mAP50 from 41% to 50% and discovering 300+ correct annotations missed by pathologists.</p>
                 </div>
                 <a href="https://github.com/rohan-patil-ai" target="_blank" class="repo-link">View Repository <i class="fas fa-arrow-right"></i></a>
             </div>
 
             <div class="card card-tall hover-target">
+                <div class="card-top">
+                    <div class="tags"><span class="tag">RAG</span></div>
+                    <span class="date-badge">Nov 2025</span>
+                </div>
                 <div>
-                    <div class="tags">
-                        <span class="tag">RAG</span>
-                        <span class="tag">Hybrid Retrieval</span>
-                    </div>
-                    [cite_start]<h3>BMW Lessons Learned [cite: 42]</h3>
-                    <p>Structured 1,000+ incident reports for semantic search. [cite_start]Built with Hybrid Retrieval (DB + API) and Plotly analytics dashboards[cite: 44, 45].</p>
+                    <h3>BMW Lessons Learned</h3>
+                    <p>Structured 1,000+ incident reports for semantic search. Built with Hybrid Retrieval (DB + API) and Plotly analytics dashboards.</p>
                 </div>
                 <a href="https://github.com/rohan-patil-ai" target="_blank" class="repo-link">View Repo <i class="fas fa-arrow-right"></i></a>
             </div>
 
             <div class="card hover-target">
-                <div>
+                <div class="card-top">
                     <div class="tags"><span class="tag">Deep Learning</span></div>
+                    <span class="date-badge">2024</span>
+                </div>
+                <div>
                     <h3>Google Tunix</h3>
                     <p>Deep learning optimization project focusing on model compression and latency reduction for edge devices.</p>
                 </div>
@@ -314,8 +330,11 @@
             </div>
 
             <div class="card hover-target">
-                <div>
+                <div class="card-top">
                     <div class="tags"><span class="tag">Computer Vision</span></div>
+                    <span class="date-badge">2024</span>
+                </div>
+                <div>
                     <h3>Waterfowl Classification</h3>
                     <p>Fine-grained image classification model distinguishing between visually similar waterfowl species in wild environments.</p>
                 </div>
@@ -323,19 +342,25 @@
             </div>
 
             <div class="card card-tall hover-target">
-                <div>
+                <div class="card-top">
                     <div class="tags"><span class="tag">Reinforcement Learning</span></div>
-                    [cite_start]<h3>Blackjack RL Agent [cite: 47]</h3>
-                    <p>Simulated 5M hands to benchmark Monte Carlo vs Q-Learning. [cite_start]Improved natural Blackjack win rate from 2.29% to 2.75% using Double Q-Learning[cite: 49].</p>
+                    <span class="date-badge">Aug 2025</span>
+                </div>
+                <div>
+                    <h3>Blackjack RL Agent</h3>
+                    <p>Simulated 5M hands to benchmark Monte Carlo vs Q-Learning. Improved natural Blackjack win rate from 2.29% to 2.75% using Double Q-Learning.</p>
                 </div>
                 <a href="https://github.com/rohan-patil-ai" target="_blank" class="repo-link">View Repo <i class="fas fa-arrow-right"></i></a>
             </div>
 
             <div class="card card-wide hover-target">
+                <div class="card-top">
+                    <div class="tags"><span class="tag">Bachelor's Project</span></div>
+                    <span class="date-badge">Jun 2024</span>
+                </div>
                 <div>
-                    [cite_start]<div class="tags"><span class="tag">Ensemble Learning</span> <span class="tag">Bachelor's Project [cite: 50]</span></div>
                     <h3>Urban Safety Analysis</h3>
-                    <p>Engineered ensemble framework (k-NN, Random Forest, Extra Trees). [cite_start]Achieved 97% F1-score analyzing historical socio-economic data patterns to predict safety indices[cite: 53, 54].</p>
+                    <p>Engineered ensemble framework (k-NN, Random Forest, Extra Trees). Achieved 97% F1-score analyzing historical socio-economic data patterns to predict safety indices.</p>
                 </div>
                 <a href="https://github.com/rohan-patil-ai" target="_blank" class="repo-link">View Repo <i class="fas fa-arrow-right"></i></a>
             </div>
@@ -407,7 +432,7 @@
         </div>
         
         <div class="footer-links">
-            [cite_start]<a href="mailto:rohanpatilrsp@gmail.com" class="f-link hover-target">rohanpatilrsp@gmail.com [cite: 2]</a>
+            <a href="mailto:rohanpatilrsp@gmail.com" class="f-link hover-target">rohanpatilrsp@gmail.com</a>
             <a href="https://www.linkedin.com/in/rohan-patil18/" target="_blank" class="f-link hover-target">LinkedIn</a>
             <a href="https://github.com/rohan-patil-ai" target="_blank" class="f-link hover-target">GitHub</a>
             
@@ -417,8 +442,8 @@
         </div>
         
         <div style="margin-top: 60px; color: #333; font-size: 0.8rem; display:flex; justify-content:space-between;">
-            [cite_start]<span>© 2026 Rohan Sanjay Patil [cite: 1]</span>
-            [cite_start]<span>Based in Würzburg, DE [cite: 4]</span>
+            <span>© 2026 Rohan Sanjay Patil</span>
+            <span>Based in Würzburg, DE</span>
         </div>
     </footer>
 
