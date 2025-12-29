@@ -8,22 +8,23 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         /* --- CORE SETTINGS --- */
         :root {
             --bg: #0a0a0a;
             --text: #ffffff;
-            --accent: #ccff00; /* Lando Norris Neon Lime */
-            --card-bg: #141414;
-            --cursor-size: 20px;
+            --accent: #ccff00; /* Neon Lime */
+            --card-bg: #111;
+            --border: #222;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: none; /* Hiding default cursor for the custom one */
+            cursor: none; /* Hide default cursor */
         }
 
         body {
@@ -34,7 +35,7 @@
             width: 100vw;
         }
 
-        /* Noise Texture Overlay for that "Raw" feel */
+        /* Noise Texture */
         .noise {
             position: fixed;
             top: 0;
@@ -43,35 +44,35 @@
             height: 100%;
             pointer-events: none;
             z-index: 999;
-            opacity: 0.05;
+            opacity: 0.04;
             background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MDAiIGhlaWdodD0iNTAwIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuNjUiIG51bSBPY3RhdmVzPSIzIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI25vaXNlKSIgb3BhY2l0eT0iMSIvPjwvc3ZnPg==');
         }
 
-        /* --- CUSTOM CURSOR --- */
+        /* --- MAGNETIC CURSOR --- */
         #cursor {
             position: fixed;
             top: 0;
             left: 0;
-            width: var(--cursor-size);
-            height: var(--cursor-size);
+            width: 20px;
+            height: 20px;
             background: var(--accent);
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
             transform: translate(-50%, -50%);
             transition: width 0.3s, height 0.3s, background-color 0.3s;
-            mix-blend-mode: difference; /* Cool inversion effect */
-        }
-
-        #cursor.hovered {
-            width: 80px;
-            height: 80px;
-            background: white;
             mix-blend-mode: difference;
         }
 
+        #cursor.hovered {
+            width: 60px;
+            height: 60px;
+            background: white;
+            opacity: 0.8;
+        }
+
         /* --- TYPOGRAPHY --- */
-        h1, h2, h3, .brand {
+        h1, h2, h3, .brand, .nav-strip a {
             font-family: 'Syne', sans-serif;
             text-transform: uppercase;
         }
@@ -86,215 +87,304 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 40px 5%;
-            position: relative;
-            z-index: 10;
+            padding: 30px 5%;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
         .brand {
             font-size: 1.5rem;
             font-weight: 800;
+            letter-spacing: -1px;
         }
 
-        .nav-links a {
-            margin-left: 30px;
+        .cta-btn {
+            background: var(--accent);
+            color: #000;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 700;
             font-size: 0.9rem;
-            font-weight: 500;
-            position: relative;
+            transition: transform 0.2s;
+            font-family: 'Syne', sans-serif;
+            text-transform: uppercase;
         }
 
-        /* --- HERO SECTION --- */
+        .cta-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* --- HERO --- */
         .hero {
-            height: 85vh;
+            height: 90vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             padding: 0 5%;
-            position: relative;
+            margin-top: 60px;
+        }
+
+        .eyebrow {
+            color: var(--accent);
+            font-family: 'Syne', sans-serif;
+            margin-bottom: 10px;
+            font-weight: 700;
         }
 
         .hero h1 {
-            font-size: clamp(3rem, 9vw, 8rem);
-            line-height: 0.9;
+            font-size: clamp(3rem, 6vw, 5rem); /* Adjusted size */
+            line-height: 1;
             font-weight: 800;
-        }
-
-        .hero h1 span {
-            display: block;
-            color: transparent;
-            -webkit-text-stroke: 1px rgba(255,255,255,0.5);
-            transition: 0.5s;
-        }
-
-        .hero h1 span:hover {
-            color: var(--accent);
-            -webkit-text-stroke: 0px;
-            transform: skewX(-10deg);
+            margin-bottom: 30px;
+            max-width: 1100px;
         }
 
         .hero p {
-            max-width: 500px;
-            margin-top: 30px;
+            max-width: 600px;
             font-size: 1.1rem;
-            color: #aaa;
+            color: #ccc;
+            line-height: 1.6;
         }
 
-        /* --- MARQUEE (SCROLLING TEXT) --- */
-        .marquee-container {
-            width: 100%;
-            overflow: hidden;
-            background: var(--accent);
-            color: var(--bg);
-            padding: 20px 0;
-            transform: rotate(-2deg) scale(1.05); /* Jaunty angle */
-            margin: 50px 0 100px 0;
-        }
-
-        .marquee-content {
-            white-space: nowrap;
+        /* --- NAV STRIP (JUMP BAR) --- */
+        .nav-strip {
             display: flex;
-            animation: scroll 20s linear infinite;
+            justify-content: space-around;
+            padding: 30px 5%;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            background: #0f0f0f;
+            margin-bottom: 80px;
         }
 
-        .marquee-item {
-            font-family: 'Syne', sans-serif;
-            font-size: 3rem;
+        .nav-strip a {
+            font-size: clamp(1rem, 3vw, 2rem);
             font-weight: 800;
-            margin-right: 60px;
-            text-transform: uppercase;
+            color: #555;
+            transition: 0.3s;
+            position: relative;
         }
 
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+        .nav-strip a:hover {
+            color: var(--text);
+        }
+
+        .nav-strip a:hover::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 100%;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        /* --- SECTIONS --- */
+        section {
+            padding: 0 5%;
+            margin-bottom: 120px;
+        }
+
+        .section-header {
+            font-size: 3rem;
+            margin-bottom: 50px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .section-header::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #333;
+        }
+
+        /* --- EXPERIENCE --- */
+        .exp-item {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            border-bottom: 1px solid var(--border);
+            padding: 40px 0;
+            transition: 0.3s;
+        }
+
+        .exp-item:hover {
+            border-color: var(--accent);
+            background: rgba(255,255,255,0.02);
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .date {
+            font-family: 'Syne', sans-serif;
+            color: #666;
+            font-weight: 700;
+        }
+
+        .role h3 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .role h4 {
+            color: var(--accent);
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            margin-bottom: 15px;
+        }
+
+        .role p {
+            color: #aaa;
+            max-width: 700px;
         }
 
         /* --- PROJECTS GRID --- */
-        .section-title {
-            padding: 0 5%;
-            font-size: 4rem;
-            margin-bottom: 50px;
-            color: var(--accent);
-        }
-
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
-            padding: 0 5%;
-            margin-bottom: 100px;
         }
 
         .card {
             background: var(--card-bg);
-            border: 1px solid #333;
-            border-radius: 12px;
-            padding: 2rem;
-            position: relative;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2.5rem;
             transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            overflow: hidden;
-            height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            min-height: 350px;
         }
 
         .card:hover {
-            transform: translateY(-10px) scale(1.02);
+            transform: translateY(-10px);
             border-color: var(--accent);
-            box-shadow: 0 0 30px rgba(204, 255, 0, 0.1);
+            box-shadow: 0 10px 40px rgba(204, 255, 0, 0.05);
         }
 
         .card h3 {
-            font-size: 2rem;
+            font-size: 1.8rem;
             margin-bottom: 10px;
-            line-height: 1;
         }
 
         .card p {
-            font-size: 0.95rem;
-            color: #bbb;
+            color: #999;
             margin-bottom: 20px;
+            line-height: 1.5;
         }
 
         .tags {
-            margin-top: auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
         }
 
         .tag {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             border: 1px solid #444;
-            padding: 5px 12px;
+            padding: 4px 10px;
             border-radius: 50px;
-            margin-right: 5px;
-            display: inline-block;
-            margin-bottom: 5px;
+            color: #888;
         }
 
-        .card:hover .tag {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        .card-link {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            border: 1px solid #555;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .view-all-btn {
+            display: block;
+            text-align: center;
+            margin-top: 60px;
+            padding: 20px;
+            border: 1px solid #333;
+            color: #fff;
             transition: 0.3s;
+            font-family: 'Syne', sans-serif;
+            text-transform: uppercase;
+            font-weight: 700;
         }
 
-        .card:hover .card-link {
+        .view-all-btn:hover {
             background: var(--accent);
-            color: var(--bg);
+            color: #000;
             border-color: var(--accent);
-            transform: rotate(-45deg);
         }
 
-        /* Featured card spans 2 columns */
-        .featured {
-            grid-column: span 2;
+        /* --- SKILLS CLOUD --- */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
         }
-        @media (max-width: 768px) { .featured { grid-column: span 1; } }
+
+        .skill {
+            font-size: 1.2rem; /* Larger font for fun */
+            padding: 15px 30px;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 100px;
+            transition: 0.1s; /* Fast snap */
+            user-select: none;
+        }
+
+        .skill:hover {
+            background: var(--accent);
+            color: #000;
+            transform: scale(1.1) rotate(-2deg);
+            border-color: var(--accent);
+        }
 
         /* --- FOOTER --- */
         footer {
-            text-align: center;
-            padding: 100px 0;
-            border-top: 1px solid #333;
             background: #050505;
+            padding: 80px 5%;
+            border-top: 1px solid #222;
         }
-        
-        .big-link {
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .footer-left h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .contact-list a {
+            display: block;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #666;
             font-family: 'Syne', sans-serif;
-            font-size: clamp(2rem, 5vw, 4rem);
-            font-weight: 800;
-            color: #333;
             transition: 0.3s;
         }
 
-        .big-link:hover {
+        .contact-list a:hover {
             color: var(--accent);
+            padding-left: 10px;
         }
 
-        /* --- MOUSE SPOTLIGHT EFFECT --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .exp-item { grid-template-columns: 1fr; gap: 10px; }
+            .nav-strip { flex-direction: column; gap: 15px; text-align: center; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Spotlight Effect */
         #spotlight {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: -1;
-            background: radial-gradient(600px circle at var(--x) var(--y), rgba(204, 255, 0, 0.06), transparent 40%);
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: -1;
+            background: radial-gradient(800px circle at var(--x) var(--y), rgba(204, 255, 0, 0.04), transparent 40%);
         }
-
     </style>
 </head>
 <body>
@@ -305,109 +395,132 @@
 
     <nav>
         <div class="brand hover-target">RSP.</div>
-        <div class="nav-links">
-            <a href="https://github.com/rohan-patil-ai" target="_blank" class="hover-target">GitHub</a>
-            <a href="https://www.linkedin.com/in/rohan-patil18/" target="_blank" class="hover-target">LinkedIn</a>
-        </div>
+        <a href="#contact" class="cta-btn hover-target">Let's Connect</a>
     </nav>
 
     <header class="hero">
+        <p class="eyebrow">MSc AI Student • Computer Vision Specialist</p>
         <h1>
-            The gap between <br>
-            <span>RESEARCH</span> 
-            and <br>
-            <span>REALITY.</span>
+            Bridging the gap between <span style="color:var(--accent)">Research</span> <br>
+            and <span style="color:var(--accent)">Real-World</span> Impact.
         </h1>
-        <p>I am Rohan Patil. I build high-scale Computer Vision systems, crush RAG pipelines, and find 5x5px bacteria in massive images.</p>
+        <p>
+            I'm Rohan Patil. I don't just train models; I build pipelines that work. 
+            Specializing in Medical Imaging, High-Scale RAG Systems, and Reinforcement Learning.
+        </p>
     </header>
 
-    <div class="marquee-container">
-        <div class="marquee-content">
-            <div class="marquee-item">Computer Vision • RAG Systems • PyTorch • Reinforcement Learning • Data Engineering • </div>
-            <div class="marquee-item">Computer Vision • RAG Systems • PyTorch • Reinforcement Learning • Data Engineering • </div>
-        </div>
+    <div class="nav-strip">
+        <a href="#experience" class="hover-target">EXPERIENCE</a>
+        <a href="#projects" class="hover-target">PROJECTS</a>
+        <a href="#skills" class="hover-target">SKILLS</a>
     </div>
 
-    <section>
-        <h2 class="section-title">The Lab</h2>
-        <div class="grid">
-            
-            <div class="card featured hover-target">
-                <a href="https://github.com/rohan-patil-ai" class="card-link"><i class="fas fa-arrow-right">-></i></a>
-                <div>
-                    <h3>H.Pylori Detection</h3>
-                    <p>Engineered a hierarchical detection pipeline for 5x5px bacteria in 150K×60K WSI images. Improved mAP50 to 50% using YOLOv8 & Active Learning.</p>
-                </div>
-                <div class="tags">
-                    <span class="tag">Master's Project</span>
-                    <span class="tag">Computer Vision</span>
-                    <span class="tag">YOLOv8</span>
-                </div>
+    <section id="experience">
+        <h2 class="section-header">Experience</h2>
+        
+        <div class="exp-item hover-target">
+            <div class="date">Present</div>
+            <div class="role">
+                <h3>Student Assistant (HiWi)</h3>
+                <h4>Julius Maximilians Universität | Würzburg, DE</h4>
+                <p>Implementing RAG systems for German startups. Building ETL pipelines and React/Flask web interfaces for knowledge base integration.</p>
             </div>
+        </div>
 
-            <div class="card hover-target">
-                <a href="https://github.com/rohan-patil-ai" class="card-link"><i class="fas fa-arrow-right">-></i></a>
-                <div>
-                    <h3>BMW RAG System</h3>
-                    <p>Structured 1,000+ incident reports for semantic search. Built with Hybrid Retrieval (DB + API).</p>
-                </div>
-                <div class="tags">
-                    <span class="tag">RAG</span>
-                    <span class="tag">LLMs</span>
-                    <span class="tag">Plotly</span>
-                </div>
+        <div class="exp-item hover-target">
+            <div class="date">2024</div>
+            <div class="role">
+                <h3>ML & Research Intern</h3>
+                <h4>Compsoft Technologies | Bangalore, IN</h4>
+                <p>Benchmarked 6 OCR engines. Built a pipeline processing 5,000+ records/run (85% manual reduction). Optimized Automated Parking Systems.</p>
             </div>
-
-            <div class="card hover-target">
-                <a href="https://github.com/rohan-patil-ai" class="card-link"><i class="fas fa-arrow-right">-></i></a>
-                <div>
-                    <h3>Blackjack RL</h3>
-                    <p>Simulated 5 Million hands to beat the house. Double Q-Learning improved win rate to 2.75%.</p>
-                </div>
-                <div class="tags">
-                    <span class="tag">Reinforcement Learning</span>
-                    <span class="tag">Simulation</span>
-                </div>
-            </div>
-
-            <div class="card hover-target">
-                <a href="https://github.com/rohan-patil-ai" class="card-link"><i class="fas fa-arrow-right">-></i></a>
-                <div>
-                    <h3>Urban Safety</h3>
-                    <p>97% F1-score analyzing socio-economic data patterns using Random Forest Ensembles.</p>
-                </div>
-                <div class="tags">
-                    <span class="tag">Scikit-learn</span>
-                    <span class="tag">Data Analysis</span>
-                </div>
-            </div>
-
         </div>
     </section>
 
-    <footer>
-        <p style="margin-bottom:20px; color: #555;">Ready to collaborate?</p>
-        <a href="mailto:rohanpatilrsp@gmail.com" class="big-link hover-target">ROHANPATILRSP@GMAIL.COM</a>
-        <p style="margin-top: 50px; font-size: 0.8rem; color: #333;">© 2026 Rohan Patil</p>
+    <section id="projects">
+        <h2 class="section-header">Selected Work</h2>
+        <div class="grid">
+            
+            <div class="card hover-target" style="grid-column: span 2;">
+                <div class="tags">
+                    <span class="tag">Master's Project</span>
+                    <span class="tag">YOLOv8</span>
+                    <span class="tag">Active Learning</span>
+                </div>
+                <h3>H.Pylori Detection in Biopsy</h3>
+                <p>Hierarchical detection pipeline for 5x5px bacteria in 150K×60K WSI images. Improved mAP50 from 41% to 50% using Active Learning, discovering 300+ missed annotations.</p>
+                <a href="https://github.com/rohan-patil-ai" class="cta-btn" style="width: fit-content; background:transparent; border:1px solid var(--accent); color:var(--accent);">View Repo</a>
+            </div>
+
+            <div class="card hover-target">
+                <div class="tags"><span class="tag">RAG</span> <span class="tag">LLM</span></div>
+                <h3>BMW Lessons Learned System</h3>
+                <p>RAG system structuring 1,000+ incident reports. Hybrid retrieval (DB+API) with Plotly analytics dashboard.</p>
+            </div>
+
+            <div class="card hover-target">
+                <div class="tags"><span class="tag">RL</span> <span class="tag">Simulation</span></div>
+                <h3>Blackjack Reinforcement Learning</h3>
+                <p>5M hand simulation. Beat the house using Double Q-Learning (win rate +0.46% vs baseline).</p>
+            </div>
+
+        </div>
+
+        <a href="https://github.com/rohan-patil-ai?tab=repositories" target="_blank" class="view-all-btn hover-target">
+            View All Projects on GitHub <i class="fas fa-arrow-right"></i>
+        </a>
+    </section>
+
+    <section id="skills">
+        <h2 class="section-header">Technical Arsenal</h2>
+        <div class="skills-container">
+            <div class="skill hover-target">Python</div>
+            <div class="skill hover-target">PyTorch</div>
+            <div class="skill hover-target">YOLOv8</div>
+            <div class="skill hover-target">Computer Vision</div>
+            <div class="skill hover-target">RAG Systems</div>
+            <div class="skill hover-target">Docker</div>
+            <div class="skill hover-target">SQL</div>
+            <div class="skill hover-target">React</div>
+            <div class="skill hover-target">Flask</div>
+            <div class="skill hover-target">C++</div>
+            <div class="skill hover-target">Reinforcement Learning</div>
+            <div class="skill hover-target">Tableau</div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="footer-grid">
+            <div class="footer-left">
+                <h2>Let's Build<br>The Future.</h2>
+                <p style="color: #666; margin-bottom: 20px;">Open for opportunities in AI, Computer Vision, and Data Engineering.</p>
+                <p style="color: #444;">📍 Würzburg, Germany</p>
+            </div>
+            
+            <div class="contact-list">
+                <a href="mailto:rohanpatilrsp@gmail.com" class="hover-target">Email: rohanpatilrsp@gmail.com</a>
+                <a href="https://www.linkedin.com/in/rohan-patil18/" target="_blank" class="hover-target">LinkedIn / Rohan-Patil</a>
+                <a href="https://github.com/rohan-patil-ai" target="_blank" class="hover-target">GitHub / Rohan-Patil-AI</a>
+                <a href="#" class="hover-target">Download CV (PDF)</a>
+            </div>
+        </div>
+        <p style="margin-top: 50px; color: #333; font-size: 0.8rem;">© 2026 Rohan Sanjay Patil</p>
     </footer>
 
     <script>
-        // --- CUSTOM CURSOR & SPOTLIGHT LOGIC ---
+        // --- CURSOR & SPOTLIGHT LOGIC ---
         const cursor = document.getElementById('cursor');
         const spotlight = document.getElementById('spotlight');
         const hoverTargets = document.querySelectorAll('.hover-target');
 
         document.addEventListener('mousemove', (e) => {
-            // Move cursor
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
-
-            // Move spotlight
             spotlight.style.setProperty('--x', e.clientX + 'px');
             spotlight.style.setProperty('--y', e.clientY + 'px');
         });
 
-        // Add hover effect to links/cards
         hoverTargets.forEach(target => {
             target.addEventListener('mouseenter', () => {
                 cursor.classList.add('hovered');
@@ -417,16 +530,13 @@
             });
         });
 
-        // Add slight parallax tilt to cards (Optional fun)
-        const cards = document.querySelectorAll('.card');
-        cards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                card.style.setProperty('--x', `${x}px`);
-                card.style.setProperty('--y', `${y}px`);
+        // Smooth Scroll for Nav Strip
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
             });
         });
     </script>
