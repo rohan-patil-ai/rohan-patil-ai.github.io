@@ -23,7 +23,7 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        /* Hide Default Cursor only on non-touch devices to prevent mobile issues */
+        /* Hide Default Cursor only on non-touch devices */
         @media (hover: hover) {
             * { cursor: none; }
         }
@@ -32,7 +32,7 @@
             background-color: var(--bg);
             color: var(--text);
             font-family: 'Inter', sans-serif;
-            overflow-x: hidden; /* Prevents horizontal scroll */
+            overflow-x: hidden;
             width: 100%;
             -webkit-font-smoothing: antialiased;
         }
@@ -56,7 +56,7 @@
             transform: translate(-50%, -50%);
             transition: width 0.3s, height 0.3s, background-color 0.3s;
             mix-blend-mode: difference;
-            display: none; /* Hidden by default, shown via JS if mouse detected */
+            display: none;
         }
         
         #cursor.hovered { width: 80px; height: 80px; background: white; mix-blend-mode: difference; }
@@ -64,7 +64,7 @@
         #spotlight {
             width: 100vw; height: 100vh; z-index: -1;
             background: radial-gradient(600px circle at var(--x) var(--y), rgba(204, 255, 0, 0.04), transparent 40%);
-            display: none; /* Hidden by default */
+            display: none;
         }
 
         /* --- TYPOGRAPHY --- */
@@ -93,7 +93,7 @@
             padding: 120px 5% 40px 5%; position: relative; id="top";
         }
         .hero-name {
-            font-size: clamp(2.5rem, 8vw, 6rem); /* Responsive Font */
+            font-size: clamp(2.5rem, 8vw, 6rem);
             font-family: 'Syne', sans-serif; font-weight: 800;
             color: #fff; line-height: 1; margin-bottom: 20px;
         }
@@ -106,14 +106,14 @@
 
         /* --- MARQUEE --- */
         .marquee-container {
-            width: 100%; background: var(--accent); color: #000; padding: 12px 0;
+            width: 105vw; margin-left: -2.5vw;
+            background: var(--accent); color: #000; padding: 12px 0;
             overflow: hidden; transform: rotate(-1.5deg); 
             margin-top: 20px; margin-bottom: 80px;
             border-top: 2px solid #fff; border-bottom: 2px solid #fff;
             cursor: pointer;
-            width: 105vw; margin-left: -2.5vw; /* Prevents edge gaps on rotation */
         }
-        .marquee-content { display: flex; white-space: nowrap; animation: scroll 8s linear infinite; }
+        .marquee-content { display: flex; white-space: nowrap; animation: scroll 25s linear infinite; }
         .marquee-item {
             font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800;
             margin-right: 60px; text-transform: uppercase;
@@ -140,7 +140,7 @@
         .role h4 { color: var(--accent); font-family: 'Inter', sans-serif; font-weight: 400; margin-bottom: 15px; }
         .role p { color: #aaa; max-width: 700px; line-height: 1.6; font-size: 0.95rem; }
 
-        /* --- PROJECTS --- */
+        /* --- PROJECTS GRID --- */
         .grid {
             display: grid; 
             grid-template-columns: repeat(3, 1fr);
@@ -189,14 +189,13 @@
         }
         .repo-link:hover { color: var(--accent); gap: 12px; }
 
-        /* Grid Spans (Desktop Only) */
+        /* Grid Spans */
         .card-large { grid-column: span 2; grid-row: span 2; }
         .card-tall { grid-row: span 2; }
         .card-wide { grid-column: span 2; }
 
         /* --- SKILLS --- */
         .skills-container { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
-        
         .skill-pill {
             background: #111; border: 1px solid #333;
             width: 160px; height: 55px;
@@ -221,22 +220,12 @@
         .footer-links { display: flex; gap: 20px; flex-wrap: wrap; flex-direction: column; }
         .f-link { font-size: 1.1rem; color: #666; transition: 0.3s; }
         
-        /* --- MOBILE OPTIMIZATION --- */
+        /* --- MOBILE --- */
         @media (max-width: 900px) {
             .grid { grid-template-columns: 1fr; }
             .card-large, .card-tall, .card-wide { grid-column: auto; grid-row: auto; }
             .exp-item { grid-template-columns: 1fr; gap: 10px; padding: 30px 0; }
             .hero-name { font-size: 3rem; }
-            .hero h2 { font-size: 1.2rem; }
-            .marquee-item { font-size: 1.5rem; margin-right: 30px; }
-            section { margin-bottom: 80px; }
-            .footer-links { gap: 15px; }
-            
-            /* Better Touch Targets */
-            .contact-btn, .repo-link, .f-link { padding: 10px 0; }
-            
-            /* Remove Hover-Only Effects for Touch */
-            .exp-item:hover { padding-left: 0; border-color: var(--border); }
         }
     </style>
 </head>
@@ -327,28 +316,20 @@
                 <a href="https://github.com/rohan-patil-ai/BMW-Incidents-to-Lessons-AI" target="_blank" class="repo-link">View Repo <i class="fas fa-arrow-right"></i></a>
             </div>
 
-            <div class="card hover-target">
+            <div class="card card-wide hover-target">
                 <div class="card-top">
-                    <div class="tags"><span class="tag">NLP</span></div>
-                    <span class="date-badge">In Progress</span>
+                    <div class="tags">
+                        <span class="tag">RAG</span>
+                        <span class="tag">Qwen 8B</span>
+                        <span class="tag">FAISS</span>
+                    </div>
+                    <span class="date-badge"><span class="live-dot"></span>In Progress</span>
                 </div>
                 <div>
-                    <h3>Google Tunix</h3>
-                    <p>Fine tuned Gemma 2B to provide reasoning for GSM8K Data by pushing the Small language model ceiling by 20%.</p>
+                    <h3>CAIRA: RAG-Powered Mentor</h3>
+                    <p>Architected a RAG pipeline with 90%+ precision for specialized student queries. Deployed a 24/7 AI conversational assistant to the THWS faculty portal using Semantic Search and Qwen 8B, reducing student onboarding friction.</p>
                 </div>
-                <a href="https://github.com/rohan-patil-ai/Google-Tunix-Hackathon" target="_blank" class="repo-link">View Repo <i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <div class="card hover-target">
-                <div class="card-top">
-                    <div class="tags"><span class="tag">Computer Vision</span></div>
-                    <span class="date-badge">Oct 2025</span>
-                </div>
-                <div>
-                    <h3>Waterfowl Classification</h3>
-                    <p>Fine-grained image classification model distinguishing between visually similar waterfowl species in wild environments.</p>
-                </div>
-                <a href="https://github.com/rohan-patil-ai/Waterfowl" target="_blank" class="repo-link">View Repo <i class="fas fa-arrow-right"></i></a>
+                <a href="https://github.com/rohan-patil-ai" target="_blank" class="repo-link">View Repo <i class="fas fa-arrow-right"></i></a>
             </div>
 
             <div class="card card-tall hover-target">
@@ -363,16 +344,28 @@
                 <a href="https://github.com/rohan-patil-ai/Blackjack21" target="_blank" class="repo-link">View Repo <i class="fas fa-arrow-right"></i></a>
             </div>
 
-            <div class="card card-wide hover-target">
+            <div class="card hover-target">
                 <div class="card-top">
-                    <div class="tags"><span class="tag">Bachelor's Project</span></div>
-                    <span class="date-badge">Jun 2024</span>
+                    <div class="tags"><span class="tag">NLP</span></div>
+                    <span class="date-badge">2024</span>
                 </div>
                 <div>
-                    <h3>Urban Safety Analysis</h3>
-                    <p>Engineered ensemble framework (k-NN, Random Forest, Extra Trees). Achieved 97% F1-score analyzing historical socio-economic data.</p>
+                    <h3>Google Tunix</h3>
+                    <p>Fine tuned Gemma 2B to provide reasoning for GSM8K Data by pushing the Small language model ceiling by 20%.</p>
                 </div>
-                <a href="https://github.com/rohan-patil-ai/SuspectPred" target="_blank" class="repo-link">View Repo <i class="fas fa-arrow-right"></i></a>
+                <a href="https://github.com/rohan-patil-ai/Google-Tunix-Hackathon" target="_blank" class="repo-link">View Repo <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="card hover-target">
+                <div class="card-top">
+                    <div class="tags"><span class="tag">Computer Vision</span></div>
+                    <span class="date-badge">2024</span>
+                </div>
+                <div>
+                    <h3>Waterfowl Classification</h3>
+                    <p>Fine-grained image classification model distinguishing between visually similar waterfowl species in wild environments.</p>
+                </div>
+                <a href="https://github.com/rohan-patil-ai/Waterfowl" target="_blank" class="repo-link">View Repo <i class="fas fa-arrow-right"></i></a>
             </div>
 
         </div>
@@ -387,13 +380,13 @@
     <section id="skills">
         <h2 class="section-header">Expertise</h2>
         <div class="skills-container">
+            <div class="skill-pill hover-target"><span class="skill-name">RAG Systems</span><span class="skill-percent">95%</span></div>
             <div class="skill-pill hover-target"><span class="skill-name">Computer Vision</span><span class="skill-percent">90%</span></div>
             <div class="skill-pill hover-target"><span class="skill-name">Python</span><span class="skill-percent">90%</span></div>
-            <div class="skill-pill hover-target"><span class="skill-name">Neural Nets</span><span class="skill-percent">80%</span></div>
-            <div class="skill-pill hover-target"><span class="skill-name">RAG Systems</span><span class="skill-percent">85%</span></div>
+            <div class="skill-pill hover-target"><span class="skill-name">LLMs & Prompting</span><span class="skill-percent">90%</span></div>
             <div class="skill-pill hover-target"><span class="skill-name">PyTorch</span><span class="skill-percent">90%</span></div>
             <div class="skill-pill hover-target"><span class="skill-name">Docker</span><span class="skill-percent">80%</span></div>
-            <div class="skill-pill hover-target"><span class="skill-name">PowerBI</span><span class="skill-percent">90%</span></div>
+            <div class="skill-pill hover-target"><span class="skill-name">FAISS/Vector DB</span><span class="skill-percent">85%</span></div>
             <div class="skill-pill hover-target"><span class="skill-name">REST API</span><span class="skill-percent">75%</span></div>
             <div class="skill-pill hover-target"><span class="skill-name">SQL</span><span class="skill-percent">85%</span></div>
             <div class="skill-pill hover-target"><span class="skill-name">ETL Pipelines</span><span class="skill-percent">80%</span></div>
@@ -422,13 +415,11 @@
     </footer>
 
     <script>
-        // Check if device uses touch (to hide cursor logic)
         const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
         const cursor = document.getElementById('cursor');
         const spotlight = document.getElementById('spotlight');
         const hoverTargets = document.querySelectorAll('.hover-target');
 
-        // Only enable custom cursor and spotlight if it's NOT a touch device
         if (!isTouchDevice) {
             cursor.style.display = 'block';
             spotlight.style.display = 'block';
@@ -446,7 +437,6 @@
             });
         }
 
-        // --- SMOOTH SCROLL ---
         function smoothScroll(target) {
             document.querySelector(target).scrollIntoView({
                 behavior: 'smooth'
