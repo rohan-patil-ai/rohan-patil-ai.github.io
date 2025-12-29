@@ -7,25 +7,21 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* --- CORE SETTINGS --- */
+        /* --- VARIABLES --- */
         :root {
-            --bg: #0a0a0a;
+            --bg: #050505;
+            --card: #0f0f0f;
             --text: #ffffff;
             --accent: #ccff00; /* Neon Lime */
-            --card-bg: #111;
+            --muted: #888;
             --border: #222;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            cursor: none; /* Hide default cursor */
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
 
         body {
             background-color: var(--bg);
@@ -35,355 +31,153 @@
             width: 100vw;
         }
 
-        /* Noise Texture */
+        /* --- NOISE & CURSOR --- */
         .noise {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 999;
-            opacity: 0.04;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 900; opacity: 0.04;
             background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MDAiIGhlaWdodD0iNTAwIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuNjUiIG51bSBPY3RhdmVzPSIzIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI25vaXNlKSIgb3BhY2l0eT0iMSIvPjwvc3ZnPg==');
         }
 
-        /* --- MAGNETIC CURSOR --- */
         #cursor {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 20px;
-            height: 20px;
-            background: var(--accent);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
+            position: fixed; top: 0; left: 0; width: 20px; height: 20px;
+            background: var(--accent); border-radius: 50%; pointer-events: none;
+            z-index: 9999; transform: translate(-50%, -50%);
             transition: width 0.3s, height 0.3s, background-color 0.3s;
             mix-blend-mode: difference;
         }
-
-        #cursor.hovered {
-            width: 60px;
-            height: 60px;
-            background: white;
-            opacity: 0.8;
-        }
+        #cursor.hovered { width: 80px; height: 80px; background: white; mix-blend-mode: difference; }
 
         /* --- TYPOGRAPHY --- */
-        h1, h2, h3, .brand, .nav-strip a {
-            font-family: 'Syne', sans-serif;
-            text-transform: uppercase;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
+        h1, h2, h3, .brand { font-family: 'Syne', sans-serif; text-transform: uppercase; }
+        a { text-decoration: none; color: inherit; }
 
         /* --- NAV --- */
         nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 30px 5%;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 100;
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(10px);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 25px 5%; position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(5,5,5,0.8); backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-
-        .brand {
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -1px;
+        .brand { font-size: 1.2rem; font-weight: 800; }
+        .contact-btn {
+            border: 1px solid var(--accent); color: var(--accent);
+            padding: 8px 20px; border-radius: 50px; font-weight: 600; font-size: 0.85rem;
+            transition: 0.3s; font-family: 'Syne', sans-serif; text-transform: uppercase;
         }
-
-        .cta-btn {
-            background: var(--accent);
-            color: #000;
-            padding: 10px 24px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            transition: transform 0.2s;
-            font-family: 'Syne', sans-serif;
-            text-transform: uppercase;
-        }
-
-        .cta-btn:hover {
-            transform: scale(1.05);
-        }
+        .contact-btn:hover { background: var(--accent); color: #000; }
 
         /* --- HERO --- */
         .hero {
-            height: 90vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 0 5%;
-            margin-top: 60px;
+            height: 85vh; display: flex; flex-direction: column; justify-content: center;
+            padding: 0 5%; position: relative;
         }
-
-        .eyebrow {
-            color: var(--accent);
-            font-family: 'Syne', sans-serif;
-            margin-bottom: 10px;
-            font-weight: 700;
+        .hero-name {
+            font-size: clamp(2rem, 5vw, 3.5rem); color: var(--muted);
+            font-family: 'Syne', sans-serif; margin-bottom: 10px; font-weight: 700;
         }
-
         .hero h1 {
-            font-size: clamp(3rem, 6vw, 5rem); /* Adjusted size */
-            line-height: 1;
-            font-weight: 800;
+            font-size: clamp(3rem, 7vw, 6rem); line-height: 0.95; font-weight: 800;
             margin-bottom: 30px;
-            max-width: 1100px;
         }
+        .hero h1 span { color: var(--accent); }
+        .hero p { max-width: 600px; color: #aaa; line-height: 1.6; font-size: 1.1rem; }
 
-        .hero p {
-            max-width: 600px;
-            font-size: 1.1rem;
-            color: #ccc;
-            line-height: 1.6;
+        /* --- MARQUEE NAV --- */
+        .marquee-container {
+            width: 100%; background: var(--accent); color: #000; padding: 15px 0;
+            overflow: hidden; transform: rotate(-1deg); margin-bottom: 80px;
+            border-top: 1px solid #fff; border-bottom: 1px solid #fff;
+            cursor: pointer; /* Indicates interactivity */
         }
+        .marquee-content { display: flex; white-space: nowrap; animation: scroll 25s linear infinite; }
+        .marquee-item {
+            font-family: 'Syne', sans-serif; font-size: 2.5rem; font-weight: 800;
+            margin-right: 60px; text-transform: uppercase; cursor: pointer;
+        }
+        .marquee-item:hover { text-decoration: underline; } /* Visual cue */
 
-        /* --- NAV STRIP (JUMP BAR) --- */
-        .nav-strip {
-            display: flex;
-            justify-content: space-around;
-            padding: 30px 5%;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            background: #0f0f0f;
-            margin-bottom: 80px;
-        }
-
-        .nav-strip a {
-            font-size: clamp(1rem, 3vw, 2rem);
-            font-weight: 800;
-            color: #555;
-            transition: 0.3s;
-            position: relative;
-        }
-
-        .nav-strip a:hover {
-            color: var(--text);
-        }
-
-        .nav-strip a:hover::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -5px;
-            width: 100%;
-            height: 3px;
-            background: var(--accent);
-        }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* --- SECTIONS --- */
-        section {
-            padding: 0 5%;
-            margin-bottom: 120px;
-        }
-
-        .section-header {
-            font-size: 3rem;
-            margin-bottom: 50px;
-            color: var(--accent);
-            display: flex;
-            align-items: center;
+        section { padding: 60px 5%; margin-bottom: 80px; }
+        .section-header { font-size: 2.5rem; margin-bottom: 40px; color: var(--text); }
+        
+        /* --- EXPERIENCE CARDS (Mitchell Sparrow Style) --- */
+        .exp-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
         }
-
-        .section-header::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: #333;
+        .exp-card {
+            background: var(--card); border: 1px solid var(--border);
+            padding: 30px; border-radius: 12px; transition: 0.3s;
+            display: flex; flex-direction: column;
         }
-
-        /* --- EXPERIENCE --- */
-        .exp-item {
-            display: grid;
-            grid-template-columns: 150px 1fr;
-            border-bottom: 1px solid var(--border);
-            padding: 40px 0;
-            transition: 0.3s;
+        .exp-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+        .exp-header { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .exp-logo {
+            width: 50px; height: 50px; background: #222; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--muted);
         }
+        .exp-date { font-family: 'Syne', sans-serif; color: var(--accent); font-size: 0.9rem; }
+        .exp-role { font-size: 1.2rem; font-weight: 600; margin-bottom: 5px; color: #fff; }
+        .exp-company { color: var(--muted); font-size: 0.95rem; margin-bottom: 15px; }
+        .exp-desc { color: #888; font-size: 0.9rem; line-height: 1.5; }
 
-        .exp-item:hover {
-            border-color: var(--accent);
-            background: rgba(255,255,255,0.02);
-            padding-left: 20px;
-            padding-right: 20px;
+        /* --- PROJECTS GRID (2 Rows) --- */
+        .project-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
         }
+        .project-card {
+            background: var(--card); border: 1px solid var(--border);
+            padding: 30px; border-radius: 12px; transition: 0.4s;
+            display: flex; flex-direction: column; justify-content: space-between;
+            min-height: 380px; position: relative; overflow: hidden;
+        }
+        .project-card:hover { transform: translateY(-8px); box-shadow: 0 10px 30px rgba(204,255,0,0.05); border-color: #444; }
+        
+        .project-card.featured { grid-column: span 2; background: linear-gradient(145deg, #111, #0a0a0a); }
+        @media(max-width: 768px) { .project-card.featured { grid-column: span 1; } }
 
-        .date {
-            font-family: 'Syne', sans-serif;
-            color: #666;
-            font-weight: 700;
+        .p-tags { margin-bottom: 20px; display: flex; gap: 8px; flex-wrap: wrap; }
+        .p-tag { font-size: 0.75rem; border: 1px solid #333; padding: 4px 10px; border-radius: 20px; color: #888; }
+        
+        .project-card h3 { font-size: 1.8rem; margin-bottom: 10px; color: #fff; }
+        .project-card p { color: #999; font-size: 0.95rem; line-height: 1.5; margin-bottom: 30px; }
+        
+        .repo-link {
+            margin-top: auto; display: inline-flex; align-items: center; gap: 10px;
+            font-size: 0.9rem; font-weight: 600; color: #fff; transition: 0.3s;
         }
+        .repo-link:hover { color: var(--accent); gap: 15px; }
 
-        .role h3 {
-            font-size: 1.5rem;
-            margin-bottom: 5px;
+        /* --- SKILLS WITH BARS --- */
+        .skills-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px; margin-top: 40px;
         }
-
-        .role h4 {
-            color: var(--accent);
-            font-family: 'Inter', sans-serif;
-            font-weight: 400;
-            margin-bottom: 15px;
-        }
-
-        .role p {
-            color: #aaa;
-            max-width: 700px;
-        }
-
-        /* --- PROJECTS GRID --- */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 2.5rem;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 350px;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: var(--accent);
-            box-shadow: 0 10px 40px rgba(204, 255, 0, 0.05);
-        }
-
-        .card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-
-        .card p {
-            color: #999;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-
-        .tag {
-            font-size: 0.7rem;
-            border: 1px solid #444;
-            padding: 4px 10px;
-            border-radius: 50px;
-            color: #888;
-        }
-
-        .view-all-btn {
-            display: block;
-            text-align: center;
-            margin-top: 60px;
-            padding: 20px;
-            border: 1px solid #333;
-            color: #fff;
-            transition: 0.3s;
-            font-family: 'Syne', sans-serif;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-
-        .view-all-btn:hover {
-            background: var(--accent);
-            color: #000;
-            border-color: var(--accent);
-        }
-
-        /* --- SKILLS CLOUD --- */
-        .skills-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .skill {
-            font-size: 1.2rem; /* Larger font for fun */
-            padding: 15px 30px;
-            background: #111;
-            border: 1px solid #333;
-            border-radius: 100px;
-            transition: 0.1s; /* Fast snap */
-            user-select: none;
-        }
-
-        .skill:hover {
-            background: var(--accent);
-            color: #000;
-            transform: scale(1.1) rotate(-2deg);
-            border-color: var(--accent);
-        }
+        .skill-item { margin-bottom: 15px; }
+        .skill-head { display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .skill-name { font-weight: 600; color: #ddd; }
+        .skill-percent { color: var(--accent); font-family: 'Syne', sans-serif; font-size: 0.85rem; }
+        
+        .progress-track { width: 100%; height: 6px; background: #222; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 1.5s ease-out; }
 
         /* --- FOOTER --- */
         footer {
-            background: #050505;
-            padding: 80px 5%;
-            border-top: 1px solid #222;
+            background: #080808; padding: 80px 5%; border-top: 1px solid #222;
         }
+        .footer-cta h2 { font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1; margin-bottom: 30px; color: #fff; }
+        .footer-links { display: flex; gap: 30px; flex-wrap: wrap; margin-top: 40px; }
+        .f-link { font-size: 1.2rem; color: #666; transition: 0.3s; border-bottom: 1px solid transparent; }
+        .f-link:hover { color: var(--accent); border-color: var(--accent); }
 
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-        }
-
-        .footer-left h2 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-
-        .contact-list a {
-            display: block;
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: #666;
-            font-family: 'Syne', sans-serif;
-            transition: 0.3s;
-        }
-
-        .contact-list a:hover {
-            color: var(--accent);
-            padding-left: 10px;
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .exp-item { grid-template-columns: 1fr; gap: 10px; }
-            .nav-strip { flex-direction: column; gap: 15px; text-align: center; }
-            .footer-grid { grid-template-columns: 1fr; }
-        }
-
-        /* Spotlight Effect */
+        /* Spotlight */
         #spotlight {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             pointer-events: none; z-index: -1;
-            background: radial-gradient(800px circle at var(--x) var(--y), rgba(204, 255, 0, 0.04), transparent 40%);
+            background: radial-gradient(800px circle at var(--x) var(--y), rgba(204, 255, 0, 0.03), transparent 40%);
         }
     </style>
 </head>
@@ -395,121 +189,213 @@
 
     <nav>
         <div class="brand hover-target">RSP.</div>
-        <a href="#contact" class="cta-btn hover-target">Let's Connect</a>
+        <a href="#contact" class="contact-btn hover-target">Connect</a>
     </nav>
 
     <header class="hero">
-        <p class="eyebrow">MSc AI Student • Computer Vision Specialist</p>
+        <div class="hero-name">Hello, I'm Rohan Patil.</div>
         <h1>
-            Bridging the gap between <span style="color:var(--accent)">Research</span> <br>
-            and <span style="color:var(--accent)">Real-World</span> Impact.
+            Bridging the gap between <br>
+            <span>Research</span> and <br>
+            <span>Real-World</span> Deployment.
         </h1>
         <p>
-            I'm Rohan Patil. I don't just train models; I build pipelines that work. 
-            Specializing in Medical Imaging, High-Scale RAG Systems, and Reinforcement Learning.
+            MSc Artificial Intelligence student at THWS. <br>
+            Specializing in High-Scale Computer Vision, RAG Systems, and Medical Imaging.
         </p>
     </header>
 
-    <div class="nav-strip">
-        <a href="#experience" class="hover-target">EXPERIENCE</a>
-        <a href="#projects" class="hover-target">PROJECTS</a>
-        <a href="#skills" class="hover-target">SKILLS</a>
+    <div class="marquee-container hover-target">
+        <div class="marquee-content">
+            <a href="#experience" class="marquee-item" onclick="smoothScroll('#experience')">• EXPERIENCE</a>
+            <a href="#projects" class="marquee-item" onclick="smoothScroll('#projects')">• PROJECTS</a>
+            <a href="#skills" class="marquee-item" onclick="smoothScroll('#skills')">• SKILLS</a>
+            <a href="#experience" class="marquee-item" onclick="smoothScroll('#experience')">• EXPERIENCE</a>
+            <a href="#projects" class="marquee-item" onclick="smoothScroll('#projects')">• PROJECTS</a>
+            <a href="#skills" class="marquee-item" onclick="smoothScroll('#skills')">• SKILLS</a>
+        </div>
     </div>
 
     <section id="experience">
         <h2 class="section-header">Experience</h2>
-        
-        <div class="exp-item hover-target">
-            <div class="date">Present</div>
-            <div class="role">
-                <h3>Student Assistant (HiWi)</h3>
-                <h4>Julius Maximilians Universität | Würzburg, DE</h4>
-                <p>Implementing RAG systems for German startups. Building ETL pipelines and React/Flask web interfaces for knowledge base integration.</p>
+        <div class="exp-grid">
+            
+            <div class="exp-card hover-target">
+                <div class="exp-header">
+                    <div class="exp-logo"><i class="fas fa-university"></i></div>
+                    <span class="exp-date">Present</span>
+                </div>
+                <div class="exp-role">Student Assistant (HiWi)</div>
+                <div class="exp-company">Julius Maximilians Universität | Würzburg</div>
+                <p class="exp-desc">
+                    Implementing RAG systems to digitalize workflows for German startups. Building ETL pipelines to structure knowledge bases for LLM integration.
+                </p>
             </div>
-        </div>
 
-        <div class="exp-item hover-target">
-            <div class="date">2024</div>
-            <div class="role">
-                <h3>ML & Research Intern</h3>
-                <h4>Compsoft Technologies | Bangalore, IN</h4>
-                <p>Benchmarked 6 OCR engines. Built a pipeline processing 5,000+ records/run (85% manual reduction). Optimized Automated Parking Systems.</p>
+            <div class="exp-card hover-target">
+                <div class="exp-header">
+                    <div class="exp-logo"><i class="fas fa-microchip"></i></div>
+                    <span class="exp-date">2024</span>
+                </div>
+                <div class="exp-role">ML & Research Intern</div>
+                <div class="exp-company">Compsoft Technologies | Bangalore</div>
+                <p class="exp-desc">
+                    Benchmarked 6 OCR engines across 8 document types. Built Python pipeline processing 5,000+ records/run, reducing manual entry by 85%.
+                </p>
             </div>
+
+             <div class="exp-card hover-target">
+                <div class="exp-header">
+                    <div class="exp-logo"><i class="fas fa-code"></i></div>
+                    <span class="exp-date">2020-2024</span>
+                </div>
+                <div class="exp-role">Bachelor of Engineering</div>
+                <div class="exp-company">BMSIT | Bangalore, India</div>
+                <p class="exp-desc">
+                    Specialized in Computer Science & Engineering. Led multiple projects in Urban Safety Analysis and Ensemble Learning.
+                </p>
+            </div>
+
         </div>
     </section>
 
     <section id="projects">
-        <h2 class="section-header">Selected Work</h2>
-        <div class="grid">
+        <h2 class="section-header">Selected Research</h2>
+        <div class="project-grid">
             
-            <div class="card hover-target" style="grid-column: span 2;">
-                <div class="tags">
-                    <span class="tag">Master's Project</span>
-                    <span class="tag">YOLOv8</span>
-                    <span class="tag">Active Learning</span>
+            <div class="project-card featured hover-target">
+                <div>
+                    <div class="p-tags">
+                        <span class="p-tag">Master's Project</span>
+                        <span class="p-tag">Computer Vision</span>
+                        <span class="p-tag">YOLOv8</span>
+                    </div>
+                    <h3>H.Pylori Detection in Biopsy</h3>
+                    <p>Engineered a hierarchical detection pipeline for 5x5px bacteria in 150K×60K WSI images. Implemented active learning with YOLOv8 and R-CNN, improving mAP50 from 41% to 50% and discovering 300+ correct annotations missed by pathologists.</p>
                 </div>
-                <h3>H.Pylori Detection in Biopsy</h3>
-                <p>Hierarchical detection pipeline for 5x5px bacteria in 150K×60K WSI images. Improved mAP50 from 41% to 50% using Active Learning, discovering 300+ missed annotations.</p>
-                <a href="https://github.com/rohan-patil-ai" class="cta-btn" style="width: fit-content; background:transparent; border:1px solid var(--accent); color:var(--accent);">View Repo</a>
+                <a href="https://github.com/rohan-patil-ai/YOUR-REPO" class="repo-link">View Repository <i class="fas fa-arrow-right"></i></a>
             </div>
 
-            <div class="card hover-target">
-                <div class="tags"><span class="tag">RAG</span> <span class="tag">LLM</span></div>
-                <h3>BMW Lessons Learned System</h3>
-                <p>RAG system structuring 1,000+ incident reports. Hybrid retrieval (DB+API) with Plotly analytics dashboard.</p>
+            <div class="project-card hover-target">
+                <div>
+                    <div class="p-tags"><span class="p-tag">RAG</span> <span class="p-tag">LLM</span></div>
+                    <h3>BMW Lessons Learned System</h3>
+                    <p>Structured 1,000+ incident reports for semantic search using Hybrid Retrieval (Database+API). Built analytics dashboard with Plotly/Power BI.</p>
+                </div>
+                <a href="https://github.com/rohan-patil-ai/YOUR-REPO" class="repo-link">View Repository <i class="fas fa-arrow-right"></i></a>
             </div>
 
-            <div class="card hover-target">
-                <div class="tags"><span class="tag">RL</span> <span class="tag">Simulation</span></div>
-                <h3>Blackjack Reinforcement Learning</h3>
-                <p>5M hand simulation. Beat the house using Double Q-Learning (win rate +0.46% vs baseline).</p>
+            <div class="project-card hover-target">
+                <div>
+                    <div class="p-tags"><span class="p-tag">Reinforcement Learning</span> <span class="p-tag">Simulation</span></div>
+                    <h3>Blackjack RL Agent</h3>
+                    <p>Simulated 5M hands to benchmark Monte Carlo vs Q-Learning. Improved natural Blackjack win rate from 2.29% to 2.75% using Double Q-Learning.</p>
+                </div>
+                <a href="https://github.com/rohan-patil-ai/YOUR-REPO" class="repo-link">View Repository <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="project-card hover-target">
+                <div>
+                    <div class="p-tags"><span class="p-tag">Ensemble Learning</span> <span class="p-tag">Scikit-learn</span></div>
+                    <h3>Urban Safety Pattern Analysis</h3>
+                    <p>Engineered ensemble framework (k-NN, Random Forest, Extra Trees). Achieved 97% F1-score analyzing historical socio-economic data patterns.</p>
+                </div>
+                <a href="https://github.com/rohan-patil-ai/YOUR-REPO" class="repo-link">View Repository <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="project-card hover-target">
+                <div>
+                    <div class="p-tags"><span class="p-tag">OCR</span> <span class="p-tag">Python</span> <span class="p-tag">Automation</span></div>
+                    <h3>Industrial Document Automation</h3>
+                    <p>Benchmarked 6 OCR engines. Built a Python pipeline processing 5,000+ records/run, reducing manual entry by 85%.</p>
+                </div>
+                <a href="https://github.com/rohan-patil-ai/YOUR-REPO" class="repo-link">View Repository <i class="fas fa-arrow-right"></i></a>
             </div>
 
         </div>
 
-        <a href="https://github.com/rohan-patil-ai?tab=repositories" target="_blank" class="view-all-btn hover-target">
-            View All Projects on GitHub <i class="fas fa-arrow-right"></i>
-        </a>
+        <div style="text-align: center; margin-top: 60px;">
+            <a href="https://github.com/rohan-patil-ai" target="_blank" class="repo-link hover-target" style="font-size: 1.2rem;">
+                More on GitHub <i class="fab fa-github"></i>
+            </a>
+        </div>
     </section>
 
     <section id="skills">
-        <h2 class="section-header">Technical Arsenal</h2>
-        <div class="skills-container">
-            <div class="skill hover-target">Python</div>
-            <div class="skill hover-target">PyTorch</div>
-            <div class="skill hover-target">YOLOv8</div>
-            <div class="skill hover-target">Computer Vision</div>
-            <div class="skill hover-target">RAG Systems</div>
-            <div class="skill hover-target">Docker</div>
-            <div class="skill hover-target">SQL</div>
-            <div class="skill hover-target">React</div>
-            <div class="skill hover-target">Flask</div>
-            <div class="skill hover-target">C++</div>
-            <div class="skill hover-target">Reinforcement Learning</div>
-            <div class="skill hover-target">Tableau</div>
+        <h2 class="section-header">Technical Proficiency</h2>
+        <div class="skills-grid">
+            
+            <div class="skill-item hover-target">
+                <div class="skill-head">
+                    <span class="skill-name">Computer Vision / YOLO</span>
+                    <span class="skill-percent">95%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 95%;"></div></div>
+            </div>
+
+            <div class="skill-item hover-target">
+                <div class="skill-head">
+                    <span class="skill-name">Python & PyTorch</span>
+                    <span class="skill-percent">90%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 90%;"></div></div>
+            </div>
+
+            <div class="skill-item hover-target">
+                <div class="skill-head">
+                    <span class="skill-name">RAG Systems / LLMs</span>
+                    <span class="skill-percent">85%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 85%;"></div></div>
+            </div>
+
+            <div class="skill-item hover-target">
+                <div class="skill-head">
+                    <span class="skill-name">Data Engineering / ETL</span>
+                    <span class="skill-percent">80%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 80%;"></div></div>
+            </div>
+
+            <div class="skill-item hover-target">
+                <div class="skill-head">
+                    <span class="skill-name">Reinforcement Learning</span>
+                    <span class="skill-percent">75%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 75%;"></div></div>
+            </div>
+
+            <div class="skill-item hover-target">
+                <div class="skill-head">
+                    <span class="skill-name">Docker & MLOps</span>
+                    <span class="skill-percent">70%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width: 70%;"></div></div>
+            </div>
+
         </div>
     </section>
 
     <footer id="contact">
-        <div class="footer-grid">
-            <div class="footer-left">
-                <h2>Let's Build<br>The Future.</h2>
-                <p style="color: #666; margin-bottom: 20px;">Open for opportunities in AI, Computer Vision, and Data Engineering.</p>
-                <p style="color: #444;">📍 Würzburg, Germany</p>
-            </div>
-            
-            <div class="contact-list">
-                <a href="mailto:rohanpatilrsp@gmail.com" class="hover-target">Email: rohanpatilrsp@gmail.com</a>
-                <a href="https://www.linkedin.com/in/rohan-patil18/" target="_blank" class="hover-target">LinkedIn / Rohan-Patil</a>
-                <a href="https://github.com/rohan-patil-ai" target="_blank" class="hover-target">GitHub / Rohan-Patil-AI</a>
-                <a href="#" class="hover-target">Download CV (PDF)</a>
-            </div>
+        <div class="footer-cta">
+            <h2>Let's build something <br> <span style="color:var(--accent)">Intelligent.</span></h2>
         </div>
-        <p style="margin-top: 50px; color: #333; font-size: 0.8rem;">© 2026 Rohan Sanjay Patil</p>
+        
+        <div class="footer-links">
+            <a href="mailto:rohanpatilrsp@gmail.com" class="f-link hover-target">rohanpatilrsp@gmail.com</a>
+            <a href="https://www.linkedin.com/in/rohan-patil18/" target="_blank" class="f-link hover-target">LinkedIn</a>
+            <a href="https://github.com/rohan-patil-ai" target="_blank" class="f-link hover-target">GitHub</a>
+            <a href="#" class="f-link hover-target">Download CV</a>
+        </div>
+        
+        <div style="margin-top: 60px; color: #333; font-size: 0.8rem; display:flex; justify-content:space-between;">
+            <span>© 2026 Rohan Sanjay Patil</span>
+            <span>Based in Würzburg, DE</span>
+        </div>
     </footer>
 
     <script>
-        // --- CURSOR & SPOTLIGHT LOGIC ---
+        // --- CURSOR & SPOTLIGHT ---
         const cursor = document.getElementById('cursor');
         const spotlight = document.getElementById('spotlight');
         const hoverTargets = document.querySelectorAll('.hover-target');
@@ -522,23 +408,35 @@
         });
 
         hoverTargets.forEach(target => {
-            target.addEventListener('mouseenter', () => {
-                cursor.classList.add('hovered');
-            });
-            target.addEventListener('mouseleave', () => {
-                cursor.classList.remove('hovered');
-            });
+            target.addEventListener('mouseenter', () => { cursor.classList.add('hovered'); });
+            target.addEventListener('mouseleave', () => { cursor.classList.remove('hovered'); });
         });
 
-        // Smooth Scroll for Nav Strip
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+        // --- SCROLL ANIMATION FOR SKILL BARS ---
+        const observerOptions = { threshold: 0.2 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Trigger skill bar animation
+                    const bars = entry.target.querySelectorAll('.progress-fill');
+                    bars.forEach(bar => {
+                        const width = bar.style.width;
+                        bar.style.width = '0'; // reset
+                        setTimeout(() => { bar.style.width = width; }, 100);
+                    });
+                    observer.unobserve(entry.target);
+                }
             });
-        });
+        }, observerOptions);
+        
+        observer.observe(document.querySelector('#skills'));
+
+        // --- SMOOTH SCROLL FUNCTION ---
+        function smoothScroll(target) {
+            document.querySelector(target).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
     </script>
 </body>
 </html>
