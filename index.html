@@ -3,455 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rohan Sanjay Patil | | AI Engineer @ BMW Group</title>
-    
+    <meta name="theme-color" content="#050505">
+    <meta name="description" content="Portfolio of Rohan Sanjay Patil — AI Engineer at BMW Group.">
+    <title>Rohan Sanjay Patil | AI Engineer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        /* --- VARIABLES --- */
-        :root {
-            --bg: #050505;
-            --card-bg: #111;
-            --text: #ffffff;
-            --text-muted: #888;
-            --accent: #ccff00; /* Neon Lime */
-            --border: #222;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        /* Hide Default Cursor only on non-touch devices */
-        @media (hover: hover) {
-            * { cursor: none; }
-        }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-            width: 100%;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        html { scroll-behavior: smooth; }
-
-        /* --- NOISE & CURSOR --- */
-        .noise {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 900; opacity: 0.04;
-            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MDAiIGhlaWdodD0iNTAwIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuNjUiIG51bSBPY3RhdmVzPSIzIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI25vaXNlKSIgb3BhY2l0eT0iMSIvPjwvc3ZnPg==');
-        }
-
-        #cursor, #spotlight {
-            position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
-        }
-
-        #cursor {
-            width: 20px; height: 20px;
-            background: var(--accent); border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s, background-color 0.3s;
-            mix-blend-mode: difference;
-            display: none;
-        }
-        
-        #cursor.hovered { width: 80px; height: 80px; background: white; mix-blend-mode: difference; }
-
-        #spotlight {
-            width: 100vw; height: 100vh; z-index: -1;
-            background: radial-gradient(600px circle at var(--x) var(--y), rgba(204, 255, 0, 0.04), transparent 40%);
-            display: none;
-        }
-
-        /* --- TYPOGRAPHY --- */
-        h1, h2, h3, .brand { font-family: 'Syne', sans-serif; text-transform: uppercase; }
-        a { text-decoration: none; color: inherit; }
-
-        /* --- NAV --- */
-        nav {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 25px 5%; position: fixed; top: 0; width: 100%; z-index: 1000;
-            background: rgba(5,5,5,0.85); backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .brand { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; cursor: pointer; }
-        .contact-btn {
-            border: 1px solid var(--accent); color: var(--accent);
-            padding: 10px 24px; border-radius: 50px; font-weight: 700; font-size: 0.85rem;
-            transition: 0.3s; font-family: 'Syne', sans-serif; text-transform: uppercase;
-        }
-        .contact-btn:hover { background: var(--accent); color: #000; }
-
-        /* --- HERO --- */
-        .hero {
-            min-height: 80vh; 
-            display: flex; flex-direction: column; justify-content: center;
-            padding: 120px 5% 40px 5%; position: relative; id="top";
-        }
-        .hero-name {
-            font-size: clamp(2.5rem, 8vw, 6rem);
-            font-family: 'Syne', sans-serif; font-weight: 800;
-            color: #fff; line-height: 1; margin-bottom: 20px;
-        }
-        .hero h2 {
-            font-size: clamp(1.2rem, 4vw, 2.5rem);
-            font-weight: 400; color: #aaa; margin-bottom: 30px;
-            max-width: 900px; line-height: 1.3;
-        }
-        .highlight { color: var(--accent); }
-
-        /* --- MARQUEE --- */
-        .marquee-container {
-            width: 105vw; margin-left: -2.5vw;
-            background: var(--accent); color: #000; padding: 12px 0;
-            overflow: hidden; transform: rotate(-1.5deg); 
-            margin-top: 20px; margin-bottom: 80px;
-            border-top: 2px solid #fff; border-bottom: 2px solid #fff;
-            cursor: pointer;
-        }
-        .marquee-content { display: flex; white-space: nowrap; animation: scroll 25s linear infinite; }
-        .marquee-item {
-            font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800;
-            margin-right: 60px; text-transform: uppercase;
-        }
-        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-        /* --- SECTIONS --- */
-        section { padding: 0 5%; margin-bottom: 120px; }
-        .section-header {
-            font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 40px; color: var(--text);
-            border-bottom: 1px solid #333; padding-bottom: 20px;
-            display: inline-block;
-        }
-
-        /* --- EXPERIENCE --- */
-        .exp-item {
-            display: grid; grid-template-columns: 120px 1fr;
-            border-bottom: 1px solid var(--border);
-            padding: 40px 0; transition: 0.3s;
-        }
-        .exp-item:hover { padding-left: 20px; border-color: var(--accent); }
-        .date { font-family: 'Syne', sans-serif; color: #888; font-weight: 700; }
-        .role h3 { font-size: 1.5rem; margin-bottom: 5px; }
-        .role h4 { color: var(--accent); font-family: 'Inter', sans-serif; font-weight: 400; margin-bottom: 15px; }
-        .role p { color: #aaa; max-width: 700px; line-height: 1.6; font-size: 0.95rem; }
-
-        /* --- PROJECTS GRID --- */
-        .grid {
-            display: grid; 
-            grid-template-columns: repeat(3, 1fr);
-            grid-auto-rows: minmax(280px, auto);
-            gap: 1.5rem;
-        }
-
-        .card {
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: 12px; padding: 2rem;
-            display: flex; flex-direction: column; justify-content: space-between;
-            transition: 0.3s; position: relative; overflow: hidden;
-        }
-        .card:hover {
-            transform: translateY(-5px); border-color: var(--accent);
-            box-shadow: 0 0 30px rgba(204, 255, 0, 0.1);
-        }
-        
-        .card-top {
-            display: flex; justify-content: space-between; align-items: start;
-            margin-bottom: 15px; flex-wrap: wrap; gap: 10px;
-        }
-        .date-badge {
-            font-family: 'Syne', sans-serif; font-size: 0.75rem; 
-            font-weight: 700; color: #fff; background: #222;
-            padding: 5px 10px; border-radius: 4px; border: 1px solid #333;
-        }
-        .live-dot {
-            display: inline-block; width: 6px; height: 6px; 
-            background: var(--accent); border-radius: 50%; margin-right: 5px;
-            box-shadow: 0 0 5px var(--accent);
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-
-        .card h3 { font-size: 1.4rem; margin-bottom: 10px; line-height: 1.1; margin-top: 10px; }
-        .card p { color: #aaa; margin-bottom: 20px; line-height: 1.5; font-size: 0.9rem; }
-        
-        .tags { display: flex; flex-wrap: wrap; gap: 6px; }
-        .tag { font-size: 0.7rem; border: 1px solid #444; padding: 4px 10px; border-radius: 50px; color: #888; }
-        .card:hover .tag { border-color: var(--accent); color: var(--accent); }
-        
-        .repo-link {
-            margin-top: auto; font-size: 0.9rem; font-weight: 600;
-            display: inline-flex; align-items: center; gap: 8px; transition: 0.3s;
-        }
-        .repo-link:hover { color: var(--accent); gap: 12px; }
-
-        /* Grid Spans */
-        .card-large { grid-column: span 2; grid-row: span 2; }
-        .card-tall { grid-row: span 2; }
-        .card-wide { grid-column: span 2; }
-
-        /* --- SKILLS --- */
-        .skills-container { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
-        .skill-pill {
-            background: #111; border: 1px solid #333;
-            width: 160px; height: 55px;
-            border-radius: 100px; color: #ccc;
-            position: relative; overflow: hidden; 
-            display: flex; align-items: center; justify-content: center;
-            transition: 0.3s;
-        }
-        .skill-name, .skill-percent {
-            position: absolute;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
-            font-family: 'Syne', sans-serif; font-weight: 700;
-        }
-        .skill-percent { opacity: 0; transform: translateY(20px); color: var(--accent); font-size: 1.3rem; }
-        .skill-pill:hover, .skill-pill:active { border-color: var(--accent); background: rgba(204, 255, 0, 0.05); }
-        .skill-pill:hover .skill-name, .skill-pill:active .skill-name { opacity: 0; transform: translateY(-20px); }
-        .skill-pill:hover .skill-percent, .skill-pill:active .skill-percent { opacity: 1; transform: translateY(0); }
-
-        /* --- FOOTER --- */
-        footer { background: #080808; padding: 60px 5%; border-top: 1px solid #222; }
-        .footer-cta h2 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 30px; }
-        .footer-links { display: flex; gap: 20px; flex-wrap: wrap; flex-direction: column; }
-        .f-link { font-size: 1.1rem; color: #666; transition: 0.3s; }
-        
-        /* --- MOBILE --- */
-        @media (max-width: 900px) {
-            .grid { grid-template-columns: 1fr; }
-            .card-large, .card-tall, .card-wide { grid-column: auto; grid-row: auto; }
-            .exp-item { grid-template-columns: 1fr; gap: 10px; padding: 30px 0; }
-            .hero-name { font-size: 3rem; }
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
+    <div class="noise" aria-hidden="true"></div>
 
-    <div class="noise"></div>
-    <div id="cursor"></div>
-    <div id="spotlight"></div>
+    <header class="site-header">
+        <a class="brand" href="#top" aria-label="Back to top">RSP<span>.</span></a>
+        <nav aria-label="Primary navigation">
+            <a href="#projects">Projects</a>
+            <a href="#experience">Experience</a>
+            <a href="#skills">Skills</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <a class="header-status" href="mailto:rohanpatilrsp@gmail.com"><i></i> Open to conversations</a>
+    </header>
 
-    <nav>
-        <div class="brand hover-target" onclick="window.scrollTo(0,0)">RSP.</div>
-        <a href="#contact" class="contact-btn hover-target">Let's Connect</a>
-    </nav>
+    <main id="top">
+        <section class="hero section-shell" aria-labelledby="hero-title">
+            <div class="hero-kicker reveal"><span class="kicker-line"></span> AI ENGINEER / MUNICH, DE</div>
+            <h1 id="hero-title" class="hero-title reveal">I teach machines<br>to <em>find patterns.</em></h1>
+            <div class="hero-bottom reveal">
+                <p class="hero-subtitle">Rohan Sanjay Patil<br><span>AI Engineer @ BMW Group · MSc AI @ THWS</span></p>
+                <a class="scroll-cue" href="#projects"><span>Scroll to explore</span><b>↓</b></a>
+            </div>
+            <div class="hero-orbit" aria-hidden="true"><span></span><span></span><span></span></div>
+        </section>
 
-    <section class="hero">
-        <div class="hero-name">ROHAN PATIL</div>
-        <h2>
-            Scaling <span class="highlight">Artificial Intelligence</span> for <br>
-            the <span class="highlight">BMW Group</span> and beyond.
-        </h2>
-        <p style="color: #666; font-size: 1rem; max-width: 500px; margin-top: 20px;">
-            AI Intern @ BMW Group • MSc AI at THWS • Productionizing RAG & Computer Vision
-        </p>
-    </section>
+        <section id="projects" class="work section-shell" aria-labelledby="projects-title">
+            <div class="section-intro reveal">
+                <p class="eyebrow">01 / PROJECTS</p>
+                <h2 id="projects-title">What I've<br><em>built.</em></h2>
+                <p class="intro-copy">From detecting bacteria in pathology slides to building production knowledge graphs — each project solves a real problem.</p>
+            </div>
 
-    <div class="marquee-container hover-target">
-        <div class="marquee-content">
-            <a href="#experience" class="marquee-item" onclick="smoothScroll('#experience')">• EXPERIENCE</a>
-            <a href="#projects" class="marquee-item" onclick="smoothScroll('#projects')">• PROJECTS</a>
-            <a href="#skills" class="marquee-item" onclick="smoothScroll('#skills')">• SKILLS</a>
-            <a href="#experience" class="marquee-item" onclick="smoothScroll('#experience')">• EXPERIENCE</a>
-            <a href="#projects" class="marquee-item" onclick="smoothScroll('#projects')">• PROJECTS</a>
-            <a href="#skills" class="marquee-item" onclick="smoothScroll('#skills')">• SKILLS</a>
+            <div class="timeline">
+                <div class="timeline-track" aria-hidden="true"><span></span></div>
+
+                <article class="project timeline-item reveal" data-project="hpylori" tabindex="0">
+                    <div class="milestone"><span>01</span></div>
+                    <div class="project-card">
+                        <div class="project-copy">
+                            <p class="project-index">MASTER'S THESIS / H.PYLORI DETECTION</p>
+                            <h3>Teaching AI to find<br><em>cancer-causing bacteria</em> in microscope slides.</h3>
+                            <p class="project-description">A deep learning pipeline that detects H. pylori bacteria in whole slide pathology images. Active learning loop improved accuracy from 30% to 80%.</p>
+                            <div class="project-meta"><span>30% <b>→</b> 80% accuracy</span><span>1,000+ annotations found</span><span>ICDD 2026 Award</span></div>
+                            <div class="project-stack">Stack: YOLOv8 · R-CNN · QuPath · Active Learning</div>
+                            <div class="project-links"><a href="https://github.com/hxrshx/pylori-bacteria-repo" target="_blank" rel="noreferrer">GitHub ↗</a><button class="text-button" type="button">View case study <span>↗</span></button></div>
+                        </div>
+                        <div class="visual-frame"><canvas id="canvas-hpylori" width="620" height="420" aria-label="Animated bacteria detection diagram"></canvas><span class="frame-label">COMPUTER VISION / ACTIVE LEARNING</span></div>
+                    </div>
+                </article>
+
+                <article class="project timeline-item reveal project-reverse" data-project="bmw-cairo" tabindex="0">
+                    <div class="milestone"><span>02</span></div>
+                    <div class="project-card">
+                        <div class="project-copy">
+                            <p class="project-index">BMW CAIRO HACKATHON / LESSONS LEARNED</p>
+                            <h3>An AI that learns<br><em>from every defect</em> at the plant.</h3>
+                            <p class="project-description">A hybrid RAG system capturing quality incidents and generating AI insights. Built in 24 hours at the BMW CAIRO Hackathon.</p>
+                            <div class="project-meta"><span>GPT-4o</span><span>SQLite Vector Search</span><span>FastAPI + React</span></div>
+                            <div class="project-stack">Stack: GPT-4o · SQLite Vector Search · FastAPI · React 18 · TypeScript</div>
+                            <div class="project-links"><a href="https://github.com/rohan-patil-ai/BMW-Incidents-to-Lessons-AI" target="_blank" rel="noreferrer">GitHub ↗</a><button class="text-button" type="button">View case study <span>↗</span></button></div>
+                        </div>
+                        <div class="visual-frame"><canvas id="canvas-bmw-cairo" width="620" height="420" aria-label="Animated BMW hackathon project diagram"></canvas><span class="frame-label">BMW CAIRO HACKATHON</span></div>
+                    </div>
+                </article>
+
+                <article class="project timeline-item reveal" data-project="viktor" tabindex="0">
+                    <div class="milestone"><span>03</span></div>
+                    <div class="project-card">
+                        <div class="project-copy">
+                            <p class="project-index">TUM.AI x VIKTOR.COM / EHL HACKATHON</p>
+                            <h3>One question.<br><em>Right model.</em> Lower cost.</h3>
+                            <p class="project-description">An explainable LLM router for Viktor.com (backed by a16z cofounder). Predicts query complexity and routes to the smallest capable model.</p>
+                            <div class="project-meta"><span>−40% baseline</span><span>−60%+ extended</span><span>5-person team</span></div>
+                            <div class="project-stack">Stack: RouteLLM · TF-IDF · Gradient Boosted Classifier</div>
+                            <div class="project-links"><button class="text-button" type="button">View case study <span>↗</span></button></div>
+                        </div>
+                        <div class="visual-frame"><canvas id="canvas-viktor" width="620" height="420" aria-label="Animated LLM routing diagram"></canvas><span class="frame-label">LLM ROUTING / COST OPTIMIZATION</span></div>
+                    </div>
+                </article>
+
+                <article class="project timeline-item reveal project-reverse" data-project="tunix" tabindex="0">
+                    <div class="milestone"><span>04</span></div>
+                    <div class="project-card">
+                        <div class="project-copy">
+                            <p class="project-index">GOOGLE TUNIX / REASONING WITH SMALL LMS</p>
+                            <h3>Small model.<br><em>Serious</em> reasoning.</h3>
+                            <p class="project-description">GRPO fine-tuning pipeline for Gemma 2B on GSM8K math reasoning. Active review mechanism reduces catastrophic forgetting.</p>
+                            <div class="project-meta"><span>71.3% GSM8K</span><span>Top 3 / 400+</span><span>8−11% review lift</span></div>
+                            <div class="project-stack">Stack: Gemma 2B · GRPO · PEFT · LoRA</div>
+                            <div class="project-links"><a href="https://github.com/rohan-patil-ai/Google-Tunix-Hackathon" target="_blank" rel="noreferrer">GitHub ↗</a><button class="text-button" type="button">View case study <span>↗</span></button></div>
+                        </div>
+                        <div class="visual-frame"><canvas id="canvas-tunix" width="620" height="420" aria-label="Animated accuracy chart"></canvas><span class="frame-label">GSM8K / FINE-TUNING</span></div>
+                    </div>
+                </article>
+
+                <article class="project timeline-item reveal" data-project="caira" tabindex="0">
+                    <div class="milestone"><span>05</span></div>
+                    <div class="project-card">
+                        <div class="project-copy">
+                            <p class="project-index">THWS / ON-PREMISE RAG CHATBOT</p>
+                            <h3>AI mentor for<br><em>incoming university students.</em></h3>
+                            <p class="project-description">A privacy-first, on-premise RAG chatbot for THWS international students. Documents stay on campus, answers in English and German.</p>
+                            <div class="project-meta"><span>12× faster inference</span><span>English + German</span><span>VLLM deployment</span></div>
+                            <div class="project-stack">Stack: Qwen 1.5-7B · VLLM · FastAPI · Docker</div>
+                            <div class="project-links"><button class="text-button" type="button">View case study <span>↗</span></button></div>
+                        </div>
+                        <div class="visual-frame"><canvas id="canvas-caira" width="620" height="420" aria-label="Animated RAG latency diagram"></canvas><span class="frame-label">RAG / ON-PREMISE DEPLOYMENT</span></div>
+                    </div>
+                </article>
+
+                <article class="project timeline-item reveal project-reverse" data-project="blackjack" tabindex="0">
+                    <div class="milestone"><span>06</span></div>
+                    <div class="project-card">
+                        <div class="project-copy">
+                            <p class="project-index">REINFORCEMENT LEARNING / SIDE PROJECT</p>
+                            <h3>Teaching an agent<br>to <em>play the odds.</em></h3>
+                            <p class="project-description">Q-learning agent that learns optimal blackjack policy through simulated hands, exploring action space and converging on strategy.</p>
+                            <div class="project-meta"><span>Q-table policy</span><span>Monte Carlo</span><span>Double Q-Learning</span></div>
+                            <div class="project-stack">Stack: Python · NumPy · OpenAI Gym</div>
+                            <div class="project-links"><a href="https://github.com/rohan-patil-ai/Blackjack21" target="_blank" rel="noreferrer">GitHub ↗</a><button class="text-button" type="button">View case study <span>↗</span></button></div>
+                        </div>
+                        <div class="visual-frame"><canvas id="canvas-blackjack" width="620" height="420" aria-label="Animated RL reward curve"></canvas><span class="frame-label">Q-LEARNING / RL</span></div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="experience" class="about section-shell" aria-labelledby="experience-title">
+            <div class="section-intro reveal"><p class="eyebrow">02 / EXPERIENCE</p><h2 id="experience-title">Where I've<br><em>worked.</em></h2></div>
+            <div class="experience-list">
+                <article class="job-card reveal">
+                    <div class="job-header"><span class="job-period">03/2026 – Present</span><h3>AI Engineer</h3><p class="job-company">BMW Group AG · Munich</p></div>
+                    <p class="job-description">Architected GraphDB-based multi-agent retrieval on Neo4j spanning 10M+ nodes. TF-IDF clustering achieved ~96% F1 for grouping supplier complaints. Migration from Palantir to self-hosted Kubernetes cluster.</p>
+                    <div class="job-stack">Neo4j · TF-IDF · Kubernetes · ArgoCD · Docker</div>
+                </article>
+                <article class="job-card reveal">
+                    <div class="job-header"><span class="job-period">01/2026 – 03/2026</span><h3>Web Automation Engineer (HiWi)</h3><p class="job-company">Julius Maximilians Universität Würzburg</p></div>
+                    <p class="job-description">Reverse-engineered LinkedIn API for n8n scraping workflow. Built ETL pipeline: CMS → Hugo → Docker → GitLab CI/CD → Nginx.</p>
+                    <div class="job-stack">n8n · Python · Docker · Hugo · GitLab CI/CD</div>
+                </article>
+                <article class="job-card reveal">
+                    <div class="job-header"><span class="job-period">10/2023 – 12/2023</span><h3>ML & Research Intern</h3><p class="job-company">Compsoft Technologies · India</p></div>
+                    <p class="job-description">Benchmarked 6 OCR engines across 8 document types. Built Python pipeline processing 5,000+ records/run. Identified 12 critical defects in automated parking system.</p>
+                    <div class="job-stack">Python · OCR · OpenCV · Pandas</div>
+                </article>
+            </div>
+        </section>
+
+        <section id="skills" class="skills section-shell" aria-labelledby="skills-title">
+            <div class="section-intro reveal"><p class="eyebrow">03 / TOOLKIT</p><h2 id="skills-title">What I use<br><em>to build.</em></h2></div>
+            <div class="skills-layout">
+                <p class="skills-note reveal">From prototype to production — I care about the space between a promising experiment and a system someone can rely on.</p>
+                <div class="skill-cloud reveal" aria-label="Technical skills">
+                    <span class="skill-pill" data-skill="python">Python</span>
+                    <span class="skill-pill" data-skill="pytorch">PyTorch</span>
+                    <span class="skill-pill" data-skill="rag">RAG</span>
+                    <span class="skill-pill" data-skill="neo4j">Neo4j</span>
+                    <span class="skill-pill" data-skill="llm">LLM Routing</span>
+                    <span class="skill-pill" data-skill="active">Active Learning</span>
+                    <span class="skill-pill" data-skill="grpo">GRPO</span>
+                    <span class="skill-pill" data-skill="vllm">vLLM</span>
+                    <span class="skill-pill" data-skill="fastapi">FastAPI</span>
+                    <span class="skill-pill" data-skill="k8s">Kubernetes</span>
+                    <span class="skill-pill" data-skill="docker">Docker</span>
+                    <span class="skill-pill" data-skill="react">React</span>
+                    <span class="skill-pill" data-skill="faiss">FAISS</span>
+                    <span class="skill-pill" data-skill="cv">Computer Vision</span>
+                    <span class="skill-pill" data-skill="sql">SQL</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="about section-shell" aria-labelledby="about-title">
+            <div class="section-intro reveal"><p class="eyebrow">04 / CURRENTLY</p><h2 id="about-title">Still<br><em>learning.</em></h2></div>
+            <div class="about-grid">
+                <div class="about-block reveal"><span class="about-label">EDUCATION</span><h3>MSc Artificial Intelligence</h3><p>Technische Hochschule Würzburg-Schweinfurt<br><small>2025 — expected 03/2027</small></p><hr><h3>BE Computer Science & Engineering</h3><p>BMS Institute of Technology<br><small>2020 — 2024</small></p></div>
+                <div class="about-block reveal"><span class="about-label">LANGUAGES</span><div class="language-row"><b>English</b><span>C1</span></div><div class="language-row"><b>German</b><span>B1 · B2 in progress</span></div><div class="language-row"><b>Hindi</b><span>Fluent</span></div></div>
+            </div>
+        </section>
+
+        <section class="github-section section-shell" aria-labelledby="github-title">
+            <div class="section-intro reveal"><p class="eyebrow">05 / MORE</p><h2 id="github-title">Other<br><em>repositories.</em></h2></div>
+            <div class="repo-grid reveal">
+                <a href="https://github.com/rohan-patil-ai/Industrial_XAI" target="_blank" rel="noreferrer" class="repo-card">
+                    <h3>Industrial_XAI</h3>
+                    <p>Explainable AI for industrial applications</p>
+                </a>
+                <a href="https://github.com/rohan-patil-ai/Waterfowl" target="_blank" rel="noreferrer" class="repo-card">
+                    <h3>Waterfowl</h3>
+                    <p>Computer vision project</p>
+                </a>
+                <a href="https://github.com/rohan-patil-ai?tab=repositories" target="_blank" rel="noreferrer" class="repo-card repo-all">
+                    <h3>View all on GitHub →</h3>
+                    <p>All repositories</p>
+                </a>
+            </div>
+        </section>
+
+        <section id="contact" class="contact section-shell" aria-labelledby="contact-title">
+            <p class="eyebrow reveal">06 / NEXT SIGNAL</p>
+            <h2 id="contact-title" class="contact-title reveal">Have an interesting<br><em>idea? Let's talk.</em></h2>
+            <div class="contact-bottom reveal"><a class="email-link" href="mailto:rohanpatilrsp@gmail.com">rohanpatilrsp@gmail.com <span>↗</span></a><div class="social-links"><a href="https://www.linkedin.com/in/rohan-patil18" target="_blank" rel="noreferrer">LinkedIn ↗</a><a href="https://github.com/rohan-patil-ai" target="_blank" rel="noreferrer">GitHub ↗</a></div></div>
+        </section>
+    </main>
+
+    <footer class="site-footer section-shell"><span>© 2026 Rohan Sanjay Patil</span><span>Made with curiosity / Munich</span><a href="#top">Back to top ↑</a></footer>
+
+    <div class="modal" id="project-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-backdrop" data-close-modal></div>
+        <div class="modal-panel"><button class="modal-close" type="button" aria-label="Close project details" data-close-modal>×</button>
+            <div class="modal-image" id="modal-image" aria-hidden="true"><div class="image-placeholder"><span>Project Image</span><small>Add your screenshot here</small></div></div>
+            <p class="project-index" id="modal-kicker"></p>
+            <h2 id="modal-title"></h2>
+            <p id="modal-body"></p>
+            <div class="modal-stack" id="modal-stack"></div>
+            <div class="modal-stats" id="modal-stats"></div>
+            <div class="modal-links" id="modal-links"></div>
         </div>
     </div>
 
-    <section id="experience">
-        <h2 class="section-header">Experience</h2>
-        
-        <div class="exp-item hover-target">
-            <div class="date">2026 - Present</div>
-            <div class="role">
-                <h3>Artificial Intelligence Intern</h3>
-                <h4>BMW Group | Munich, DE</h4>
-                <p>Architecting production-scale RAG systems to structure 1,000+ incident reports. Implementing hybrid retrieval (Database + API) using FastAPI and GPT-4o to enable high-relevance semantic search for cross-departmental trend analysis.</p>
-            </div>
-        </div>
-
-        <div class="exp-item hover-target">
-            <div class="date">2026</div>
-            <div class="role">
-                <h3>Web Automation Engineer (HiWi)</h3>
-                <h4>Julius Maximilians Universität | Würzburg, DE</h4>
-                <p>Reverse-engineered LinkedIn's Voyager API to automate paginated data extraction, replacing paid third-party widgets. Architected a CI/CD pipeline using GitLab and Nginx that automates builds and deployments in **<0.5ms**.</p>
-            </div>
-        </div>
-
-        <div class="exp-item hover-target">
-            <div class="date">2023</div>
-            <div class="role">
-                <h3>ML & Research Intern</h3>
-                <h4>Compsoft Technologies | Bangalore, IN</h4>
-                <p>Improved reliability of an Automated Parking System (APS) by 25% by identifying 12 critical defects and reducing system latency by 1.6s. Built a high-throughput Python pipeline processing 5,000+ OCR records per run.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="projects">
-        <h2 class="section-header">Recent Projects</h2>
-        <div class="grid">
-            <div class="card card-large hover-target">
-                <div class="card-top">
-                    <div class="tags">
-                        <span class="tag">Master's Project</span>
-                        <span class="tag">Object Detection</span>
-                    </div>
-                    <span class="date-badge"><span class="live-dot"></span>In Progress</span>
-                </div>
-                <div>
-                    <h3>H.Pylori Detection in Biopsy</h3>
-                    <p>Engineered a hierarchical detection pipeline for 5x5px bacteria in 150K×60K WSI images. Implemented active learning with YOLOv8 and R-CNN, Detected additonal unseen 1000+ bacteria.</p>
-                </div>
-                <a href="https://github.com/rohan-patil-ai" target="_blank" class="repo-link">View Repository <i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <div class="card card-tall hover-target">
-                <div class="card-top">
-                    <div class="tags"><span class="tag">RAG</span></div>
-                    <span class="date-badge">Nov 2025</span>
-                </div>
-
-                <div>
-                    <h3>BMW Lessons Learned</h3>
-                    <p>Structured 1,000+ incident reports for semantic search. Built with Hybrid Retrieval (DB + API) and Plotly analytics dashboards.</p>
-                </div>
-                <a href="https://github.com/rohan-patil-ai/BMW-Incidents-to-Lessons-AI" target="_blank" class="repo-link">View Repo <i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <div class="card card-wide hover-target">
-                <div class="card-top">
-                    <div class="tags">
-                        <span class="tag">RAG</span>
-                        <span class="tag">Qwen 8B</span>
-                        <span class="tag">FAISS</span>
-                    </div>
-                    <span class="date-badge">Jan 2026</span>
-                </div>
-
-                <div>
-                    <h3>CAIRA: RAG-Powered Mentor</h3>
-                    <p>Architected a RAG pipeline with 90%+ precision for specialized student queries. Deployed a 24/7 AI conversational assistant to the THWS faculty portal using Semantic Search and Qwen 1.5B, reducing student onboarding friction.</p>
-                </div>
-                <a href="https://github.com/rohan-patil-ai" target="_blank" class="repo-link">View Repo <i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <div class="card card-tall hover-target">
-                <div class="card-top">
-                    <div class="tags"><span class="tag">Reinforcement Learning</span></div>
-                    <span class="date-badge">July 2025</span>
-                </div>
-                <div>
-                    <h3>Blackjack RL Agent</h3>
-                    <p>Simulated 5M hands to benchmark Monte Carlo vs Q-Learning. Improved natural Blackjack win rate by 20% over baseline using Double Q-Learning.</p>
-                </div>
-                <a href="https://github.com/rohan-patil-ai/Blackjack21" target="_blank" class="repo-link">View Repo <i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <div class="card hover-target">
-                <div class="card-top">
-                    <div class="tags"><span class="tag">NLP</span></div>
-                    <span class="date-badge">Jan 2026</span>
-                </div>
-
-                <div>
-                    <h3>Google Tunix</h3>
-                    <p>Fine tuned Gemma 2B to provide reasoning for GSM8K Data by pushing the Small language model ceiling by 20%.</p>
-                </div>
-                <a href="https://github.com/rohan-patil-ai/Google-Tunix-Hackathon" target="_blank" class="repo-link">View Repo <i class="fas fa-arrow-right"></i></a>
-            </div>
-            
-            <div class="card hover-target">
-                <div class="card-top">
-                    <div class="tags"><span class="tag">Computer Vision</span></div>
-                    <span class="date-badge">2024</span>
-                </div>
-                
-                <div>
-                    <h3>Waterfowl Classification</h3>
-                    <p>Fine-grained image classification model distinguishing between visually similar waterfowl species in wild environments.</p>
-                </div>
-                <a href="https://github.com/rohan-patil-ai/Waterfowl" target="_blank" class="repo-link">View Repo <i class="fas fa-arrow-right"></i></a>
-            </div>
-        </div>
-        
-        <div style="text-align: center; margin-top: 50px;">
-            <a href="https://github.com/rohan-patil-ai?tab=repositories" target="_blank" class="repo-link hover-target" style="font-size: 1.1rem; border-bottom:1px solid #333;">
-                More projects on GitHub <i class="fab fa-github"></i>
-            </a>
-        </div>
-    </section>
-
-    <section id="skills">
-        <h2 class="section-header">Expertise</h2>
-        <div class="skills-container">
-            <div class="skill-pill hover-target"><span class="skill-name">RAG Systems</span><span class="skill-percent">95%</span></div>
-            <div class="skill-pill hover-target"><span class="skill-name">Computer Vision</span><span class="skill-percent">90%</span></div>
-            <div class="skill-pill hover-target"><span class="skill-name">Python</span><span class="skill-percent">90%</span></div>
-            <div class="skill-pill hover-target"><span class="skill-name">LLMs</span><span class="skill-percent">90%</span></div>
-            <div class="skill-pill hover-target"><span class="skill-name">PyTorch</span><span class="skill-percent">90%</span></div>
-            <div class="skill-pill hover-target"><span class="skill-name">Docker</span><span class="skill-percent">80%</span></div>
-            <div class="skill-pill hover-target"><span class="skill-name">FAISS/Vector DB</span><span class="skill-percent">85%</span></div>
-            <div class="skill-pill hover-target"><span class="skill-name">REST API</span><span class="skill-percent">75%</span></div>
-            <div class="skill-pill hover-target"><span class="skill-name">SQL</span><span class="skill-percent">85%</span></div>
-            <div class="skill-pill hover-target"><span class="skill-name">ETL Pipelines</span><span class="skill-percent">80%</span></div>
-        </div>
-    </section>
-
-    <footer id="contact">
-        <div class="footer-cta">
-            <h2>Let's build something <br> <span style="color:var(--accent)">Intelligent.</span></h2>
-        </div>
-        
-        <div class="footer-links">
-            <a href="mailto:rohanpatilrsp18@gmail.com" class="f-link hover-target">rohanpatilrsp18@gmail.com</a>
-            <a href="https://www.linkedin.com/in/rohan-patil18/" target="_blank" class="f-link hover-target">LinkedIn</a>
-            <a href="https://github.com/rohan-patil-ai" target="_blank" class="f-link hover-target">GitHub</a>
-            
-            <a href="RohanSanjayPatil_CV.pdf" download class="f-link hover-target" style="color:var(--accent); border-bottom: 1px solid var(--accent); margin-top: 10px; display:inline-block;">
-                <i class="fas fa-download"></i> Download CV
-            </a>
-        </div>
-        
-        <div style="margin-top: 60px; color: #333; font-size: 0.8rem; display:flex; justify-content:space-between;">
-            <span>© 2026 Rohan Sanjay Patil</span>
-            <span>AI Intern @ BMW Group</span>
-        </div>
-    </footer>
-
-    <script>
-        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-        const cursor = document.getElementById('cursor');
-        const spotlight = document.getElementById('spotlight');
-        const hoverTargets = document.querySelectorAll('.hover-target');
-
-        if (!isTouchDevice) {
-            cursor.style.display = 'block';
-            spotlight.style.display = 'block';
-
-            document.addEventListener('mousemove', (e) => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-                spotlight.style.setProperty('--x', e.clientX + 'px');
-                spotlight.style.setProperty('--y', e.clientY + 'px');
-            });
-
-            hoverTargets.forEach(target => {
-                target.addEventListener('mouseenter', () => { cursor.classList.add('hovered'); });
-                target.addEventListener('mouseleave', () => { cursor.classList.remove('hovered'); });
-            });
-        }
-
-        function smoothScroll(target) {
-            document.querySelector(target).scrollIntoView({
-                behavior: 'smooth'
-            });
-        }
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
