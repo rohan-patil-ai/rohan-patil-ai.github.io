@@ -8,12 +8,12 @@
   const skills = ['Python', 'PyTorch', 'RAG', 'Neo4j', 'LLM Routing', 'Active Learning', 'GRPO', 'vLLM', 'FastAPI', 'Kubernetes', 'Docker', 'React', 'FAISS', 'Computer Vision', 'SQL'];
 
   const projectDetails = {
-    hpylori: { kicker: 'MASTER\'S THESIS / H.PYLORI DETECTION', title: 'Teaching AI to find cancer-causing bacteria in microscope slides.', body: 'Deep learning pipeline detecting H. pylori in whole slide pathology images. YOLOv8, R-CNN, QuPath with active learning loop. Accuracy improved from 30% to 80%, surfaced 1,000+ missed annotations. Awarded "Most Creative Research" at ICDD 2026.', stack: 'Stack: YOLOv8 · R-CNN · QuPath · Active Learning · Python · PyTorch', stats: ['30% → 80% accuracy', '1,000+ annotations', 'ICDD 2026 Award'], github: 'https://github.com/hxrshx/pylori-bacteria-repo' },
-    'bmw-cairo': { kicker: 'BMW CAIRO HACKATHON / LESSONS LEARNED', title: 'AI that learns from every defect at the plant.', body: 'Hybrid RAG platform capturing quality incidents and generating AI insights. Incident reporting, multi-source solution search, department analytics. Built for the BMW CAIRO Hackathon on October 17, 2025.', stack: 'Stack: GPT-4o · SQLite Vector Search · FastAPI · React 18 · TypeScript', stats: ['GPT-4o', 'SQLite Vector Search', 'FastAPI + React'], github: 'https://github.com/rohan-patil-ai/BMW-Incidents-to-Lessons-AI' },
-    viktor: { kicker: 'TUM.AI x VIKTOR.COM / EHL HACKATHON', title: 'One question. Right model. Lower cost.', body: 'Explainable LLM router built in 24 hours for Viktor.com. Predicts query complexity from TF-IDF and metadata, routes to smallest capable model. Baseline cost −40%, extended evaluation −60%+.', stack: 'Stack: RouteLLM · TF-IDF · Gradient Boosted Classifier · Python', stats: ['−40% baseline', '−60%+ extended', '24h build'], github: 'https://github.com/rohan-patil-ai' },
-    tunix: { kicker: 'GOOGLE TUNIX / TOP 3 MEDAL', title: 'Small model. Serious reasoning.', body: 'GRPO fine-tuning for Gemma 2B on GSM8K math reasoning. Active review reduces catastrophic forgetting. Consensus voting adds 8–11% lift without more training. Top 3 / 400+ participants.', stack: 'Stack: Gemma 2B · GRPO · PEFT · LoRA · PyTorch', stats: ['71.3% GSM8K', 'Top 3 / 400+', '8–11% lift'], github: 'https://github.com/rohan-patil-ai/Google-Tunix-Hackathon' },
-    caira: { kicker: 'THWS / ON-PREMISE RAG', title: 'AI mentor for incoming students.', body: 'Privacy-first RAG chatbot for THWS international students. Documents on-premise, bilingual interface (EN+DE). vLLM + FastAPI reduced latency 12× (60s to <5s).', stack: 'Stack: Qwen 1.5-7B · vLLM · FastAPI · Docker · Nginx', stats: ['12× faster', 'EN + DE', 'On-premise'], github: 'https://github.com/rohan-patil-ai' },
-    blackjack: { kicker: 'REINFORCEMENT LEARNING', title: 'Teaching an agent to play the odds.', body: 'Q-learning agent learns optimal blackjack policy through simulated hands. Monte Carlo, Double Q-Learning implementations under realistic conditions.', stack: 'Stack: Python · NumPy · OpenAI Gym · Matplotlib', stats: ['Q-table policy', 'Monte Carlo', 'Double Q'], github: 'https://github.com/rohan-patil-ai/Blackjack21' }
+    hpylori: { kicker: 'MASTER\'S PROJECT / H.PYLORI DETECTION', title: 'Teaching AI to find cancer-causing bacteria in microscope slides.', body: 'Deep learning pipeline detecting H. pylori in whole slide pathology images. YOLOv8, R-CNN, QuPath with active learning loop. Accuracy improved from 30% to 80%, surfaced 1,000+ missed annotations. Awarded "Most Creative Research" at ICDD 2026.', stack: 'Stack: YOLOv8 · R-CNN · QuPath · Active Learning · Python · PyTorch', stats: ['30% → 80% accuracy', '1,000+ annotations', 'ICDD 2026 Award'], github: 'https://github.com/hxrshx/pylori-bacteria-repo', image: 'preview/hpylori.svg' },
+    'bmw-cairo': { kicker: 'BMW CAIRO HACKATHON / LESSONS LEARNED', title: 'AI that learns from every defect at the plant.', body: 'Hybrid RAG capturing quality incidents and generating AI insights. Incident reporting, multi-source solution search, department analytics. Built for the BMW CAIRO Hackathon on October 17, 2025.', stack: 'Stack: GPT-4o · SQLite Vector Search · FastAPI · React 18', stats: ['GPT-4o', 'SQLite Vector Search', 'FastAPI + React'], github: 'https://github.com/rohan-patil-ai/BMW-Incidents-to-Lessons-AI', image: 'preview/bmw-cairo.png' },
+    viktor: { kicker: 'TUM.AI x VIKTOR.COM / EHL HACKATHON', title: 'One question. Right model. Lower cost.', body: 'Explainable LLM router for Viktor.com. Predicts query complexity, routes to smallest capable model. 60%+ cost savings.', stack: 'Stack: RouteLLM · TF-IDF · Gradient Boosted Classifier', stats: ['−40% baseline', '−60%+ extended', '24h build'], github: 'https://github.com/rohan-patil-ai', image: 'preview/viktor.svg' },
+    tunix: { kicker: 'GOOGLE TUNIX / TOP 3 MEDAL', title: 'Small model. Serious reasoning.', body: 'GRPO fine-tuning for Gemma 2B on GSM8K math. Active review reduces catastrophic forgetting. Top 3 / 400+.', stack: 'Stack: Gemma 2B · GRPO · PEFT · LoRA', stats: ['71.3% GSM8K', 'Top 3 / 400+', '8–11% lift'], github: 'https://github.com/rohan-patil-ai/Google-Tunix-Hackathon', image: 'preview/tunix.png' },
+    caira: { kicker: 'THWS / ON-PREMISE RAG', title: 'AI mentor for incoming students.', body: 'Privacy-first RAG chatbot for THWS international students. Bilingual, on-premise, 12× faster inference.', stack: 'Stack: Qwen 1.5-7B · vLLM · FastAPI · Docker', stats: ['12× faster', 'EN + DE', 'On-premise'], github: 'https://github.com/rohan-patil-ai', image: 'preview/caira.svg' },
+    blackjack: { kicker: 'REINFORCEMENT LEARNING', title: 'Teaching an agent to play the odds.', body: 'Q-learning agent learns optimal blackjack policy. Monte Carlo, Double Q-Learning under realistic conditions.', stack: 'Stack: Python · NumPy · OpenAI Gym', stats: ['Q-table policy', 'Monte Carlo', 'Double Q'], github: 'https://github.com/rohan-patil-ai/Blackjack21', image: 'preview/blackjack.svg' }
   };
 
   function setupCanvas(canvas) {
@@ -151,8 +151,7 @@
     canvas.width = w * dpr; canvas.height = h * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     const bubbles = skills.map(() => ({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - 0.5) * 2, vy: (Math.random() - 0.5) * 2, r: 30 + Math.random() * 20 }));
-    let dragging = null;
-    let mouseX = 0, mouseY = 0;
+    let dragging = null; let mouseX = 0; let mouseY = 0;
     function draw() {
       ctx.fillStyle = 'rgba(5, 5, 5, 0.6)'; ctx.fillRect(0, 0, w, h);
       ctx.strokeStyle = GRID; ctx.lineWidth = 0.5;
@@ -162,7 +161,7 @@
         if (dragging !== i) { b.x += b.vx; b.y += b.vy; if (b.x - b.r < 0 || b.x + b.r > w) b.vx *= -1; if (b.y - b.r < 0 || b.y + b.r > h) b.vy *= -1; }
         ctx.fillStyle = dragging === i ? ACCENT : 'rgba(204,255,0,.2)'; ctx.strokeStyle = ACCENT; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
         ctx.fillStyle = dragging === i ? '#050505' : 'rgba(240,240,240,.7)'; ctx.font = '12px "DM Mono"'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-        const text = skills[i]; const metrics = ctx.measureText(text); ctx.fillText(text, b.x, b.y);
+        const text = skills[i]; ctx.fillText(text, b.x, b.y);
       });
       requestAnimationFrame(draw);
     }
@@ -204,6 +203,8 @@
     const stats = document.getElementById('modal-stats');
     const stack = document.getElementById('modal-stack');
     const links = document.getElementById('modal-links');
+    const imgEl = document.getElementById('modal-img');
+    const imgPlaceholder = document.getElementById('img-placeholder');
     const close = () => { modal.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; };
     const open = (key) => {
       const detail = projectDetails[key];
@@ -214,6 +215,7 @@
       stack.textContent = detail.stack;
       stats.innerHTML = detail.stats.map((s) => `<span>${s}</span>`).join('');
       links.innerHTML = detail.github ? `<a href="${detail.github}" target="_blank" rel="noreferrer">View on GitHub ↗</a>` : '';
+      if (detail.image) { imgEl.src = detail.image; imgEl.style.display = 'block'; imgPlaceholder.style.display = 'none'; } else { imgEl.style.display = 'none'; imgPlaceholder.style.display = 'flex'; }
       modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
       modal.querySelector('.modal-close').focus();

@@ -30,9 +30,9 @@
     <main id="top">
         <section class="hero section-shell" aria-labelledby="hero-title">
             <div class="hero-kicker reveal"><span class="kicker-line"></span> AI ENGINEER / MUNICH, DE</div>
-            <h1 id="hero-title" class="hero-title reveal">I turn unfamiliar problems<br>into AI systems<br>that <em>work in the real world.</em></h1>
+            <h1 id="hero-title" class="hero-title reveal">I take AI from<br>first question to <em>working system.</em></h1>
             <div class="hero-bottom reveal">
-                <p class="hero-subtitle">Rohan Sanjay Patil<br><span>AI Engineer @ BMW Group · MSc AI @ THWS</span></p>
+                <p class="hero-subtitle">Rohan Sanjay Patil<br><span>Master's Thesis @ BMW Group · MSc AI @ THWS</span></p>
                 <a class="scroll-cue" href="#projects"><span>Scroll to explore</span><b>↓</b></a>
             </div>
             <div class="hero-orbit" aria-hidden="true"><span></span><span></span><span></span></div>
@@ -52,7 +52,7 @@
                     <div class="milestone"><span>01</span></div>
                     <div class="project-card">
                         <div class="project-copy">
-                            <p class="project-index">MASTER'S THESIS / COMPUTER VISION</p>
+                            <p class="project-index">MASTER'S PROJECT / COMPUTER VISION</p>
                             <h3>Teaching AI to find<br><em>cancer-causing bacteria</em> in microscope slides.</h3>
                             <p class="project-description">Deep learning pipeline detecting H. pylori in whole slide pathology images. Active learning improved accuracy from 30% to 80%, discovered 1,000+ missed annotations.</p>
                             <div class="project-meta"><span>30% → 80% accuracy</span><span>1,000+ annotations</span><span>ICDD 2026</span></div>
@@ -166,12 +166,17 @@
             <div class="section-intro reveal"><p class="eyebrow">02 / EXPERIENCE</p><h2 id="experience-title">Where I've<br><em>worked.</em></h2></div>
             <div class="experience-list">
                 <article class="job-card reveal">
-                    <div class="job-header"><span class="job-period">03/2026 – Present</span><h3>AI Engineer</h3><p class="job-company">BMW Group AG · Munich</p></div>
-                    <p class="job-description">GraphDB-based multi-agent retrieval on Neo4j (10M+ nodes). TF-IDF clustering at ~96% F1. Migration from Palantir to self-hosted Kubernetes.</p>
+                    <div class="job-header"><span class="job-period">10/2026 – Present</span><h3>Master's Thesis Student</h3><p class="job-company">BMW Group AG · Munich</p></div>
+                    <p class="job-description">Beginning Master's thesis at BMW Group in October 2026, focused on applied AI systems for production data and knowledge retrieval.</p>
+                    <div class="job-stack">Applied AI · Knowledge Retrieval · Graph Data</div>
+                </article>
+                <article class="job-card reveal">
+                    <div class="job-header"><span class="job-period">03/2026 – 09/2026</span><h3>AI Engineer Intern</h3><p class="job-company">BMW Group AG · Munich</p></div>
+                    <p class="job-description">Engineered GraphDB-based multi-agent retrieval on Neo4j (10M+ nodes). Built TF-IDF clustering at ~96% F1 and migrated internal tooling from Palantir to self-hosted Kubernetes.</p>
                     <div class="job-stack">Neo4j · TF-IDF · Kubernetes · ArgoCD · Docker</div>
                 </article>
                 <article class="job-card reveal">
-                    <div class="job-header"><span class="job-period">01/2026 – 03/2026</span><h3>Web Automation Engineer</h3><p class="job-company">Julius Maximilians Universität Würzburg</p></div>
+                    <div class="job-header"><span class="job-period">01/2026 – 02/2026</span><h3>Web Automation Engineer</h3><p class="job-company">Julius Maximilians Universität Würzburg</p></div>
                     <p class="job-description">Reverse-engineered LinkedIn API for n8n workflow. ETL pipeline: CMS → Hugo → Docker → GitLab CI/CD → Nginx.</p>
                     <div class="job-stack">n8n · Python · Docker · Hugo · GitLab CI/CD</div>
                 </article>
@@ -211,7 +216,10 @@
         <div class="modal-backdrop" data-close-modal></div>
         <div class="modal-panel">
             <button class="modal-close" type="button" aria-label="Close" data-close-modal>×</button>
-            <div class="modal-image" id="modal-image"><div class="image-placeholder"><span>Project Screenshot</span><small>Add your image</small></div></div>
+            <div class="modal-image" id="modal-image">
+                <img id="modal-img" src="" alt="Project preview" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius-md);">
+                <div class="image-placeholder" id="img-placeholder"><span>Project Screenshot</span><small>Add your image</small></div>
+            </div>
             <p class="project-index" id="modal-kicker"></p>
             <h2 id="modal-title"></h2>
             <p id="modal-body"></p>
