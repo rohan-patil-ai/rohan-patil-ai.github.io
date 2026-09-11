@@ -335,3 +335,117 @@ canvas { width: 100%; height: 100%; display: block; }
   .job-header { flex-direction: column; gap: 6px; }
   .repo-grid { grid-template-columns: 1fr; }
 }
+
+/* ---- modal base ---- */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.25s ease, visibility 0s linear 0.25s;
+}
+.modal[aria-hidden="false"] {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+}
+.modal-panel {
+  position: relative;
+  width: min(680px, 100%);
+  max-height: 86vh;
+  overflow-y: auto;
+  background: var(--color-glass-thick);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  box-shadow: 0 0 60px rgba(204, 255, 0, 0.12);
+}
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.modal-close:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.modal-panel .project-index { margin-top: 0; }
+.modal-panel h2 {
+  font-family: var(--font-head);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.2;
+  margin: 12px 0 16px;
+}
+.modal-panel #modal-body {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--color-muted);
+}
+.modal-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+/* ---- draggable skills ---- */
+.skills-bubble-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: rgba(5, 5, 5, 0.4);
+}
+#skills-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: grab;
+}
+#skills-canvas:active { cursor: grabbing; }
+
+/* ---- github CTA ---- */
+.github-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 48px;
+}
+.github-button {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: #050505;
+  background: var(--color-accent);
+  padding: 14px 28px;
+  border-radius: var(--radius-full);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: all 0.25s;
+}
+.github-button:hover {
+  box-shadow: 0 0 30px rgba(204, 255, 0, 0.35);
+  transform: translateY(-2px);
+}
