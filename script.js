@@ -6,14 +6,21 @@
   const GRID = 'rgba(204, 255, 0, 0.12)';
 
   const skills = ['Python', 'PyTorch', 'RAG', 'Neo4j', 'LLM Routing', 'Active Learning', 'GRPO', 'vLLM', 'FastAPI', 'Kubernetes', 'Docker', 'React', 'FAISS', 'Computer Vision', 'SQL'];
+  const skillConnections = [
+    ['Python', 'PyTorch'], ['Python', 'RAG'], ['Python', 'Computer Vision'],
+    ['PyTorch', 'Active Learning'], ['RAG', 'Neo4j'], ['RAG', 'FastAPI'],
+    ['Neo4j', 'Kubernetes'], ['LLM Routing', 'FastAPI'], ['GRPO', 'PyTorch'],
+    ['vLLM', 'FastAPI'], ['FastAPI', 'Docker'], ['Kubernetes', 'Docker'],
+    ['Computer Vision', 'Active Learning'], ['FAISS', 'RAG'], ['SQL', 'Neo4j']
+  ];
 
   const projectDetails = {
-    hpylori: { kicker: 'MASTER\'S PROJECT / H.PYLORI DETECTION', title: 'Teaching AI to find cancer-causing bacteria in microscope slides.', body: 'Deep learning pipeline detecting H. pylori in whole slide pathology images. YOLOv8, R-CNN, QuPath with active learning loop. Accuracy improved from 30% to 80%, surfaced 1,000+ missed annotations. Awarded "Most Creative Research" at ICDD 2026.', stack: 'Stack: YOLOv8 · R-CNN · QuPath · Active Learning · Python · PyTorch', stats: ['30% → 80% accuracy', '1,000+ annotations', 'ICDD 2026 Award'], github: 'https://github.com/hxrshx/pylori-bacteria-repo', image: 'preview/hpylori.svg' },
-    'bmw-cairo': { kicker: 'BMW CAIRO HACKATHON / LESSONS LEARNED', title: 'AI that learns from every defect at the plant.', body: 'Hybrid RAG capturing quality incidents and generating AI insights. Incident reporting, multi-source solution search, department analytics. Built for the BMW CAIRO Hackathon on October 17, 2025.', stack: 'Stack: GPT-4o · SQLite Vector Search · FastAPI · React 18', stats: ['GPT-4o', 'SQLite Vector Search', 'FastAPI + React'], github: 'https://github.com/rohan-patil-ai/BMW-Incidents-to-Lessons-AI', image: 'preview/bmw-cairo.png' },
-    viktor: { kicker: 'TUM.AI x VIKTOR.COM / EHL HACKATHON', title: 'One question. Right model. Lower cost.', body: 'Explainable LLM router for Viktor.com. Predicts query complexity, routes to smallest capable model. 60%+ cost savings.', stack: 'Stack: RouteLLM · TF-IDF · Gradient Boosted Classifier', stats: ['−40% baseline', '−60%+ extended', '24h build'], github: 'https://github.com/rohan-patil-ai', image: 'preview/viktor.svg' },
-    tunix: { kicker: 'GOOGLE TUNIX / TOP 3 MEDAL', title: 'Small model. Serious reasoning.', body: 'GRPO fine-tuning for Gemma 2B on GSM8K math. Active review reduces catastrophic forgetting. Top 3 / 400+.', stack: 'Stack: Gemma 2B · GRPO · PEFT · LoRA', stats: ['71.3% GSM8K', 'Top 3 / 400+', '8–11% lift'], github: 'https://github.com/rohan-patil-ai/Google-Tunix-Hackathon', image: 'preview/tunix.png' },
-    caira: { kicker: 'THWS / ON-PREMISE RAG', title: 'AI mentor for incoming students.', body: 'Privacy-first RAG chatbot for THWS international students. Bilingual, on-premise, 12× faster inference.', stack: 'Stack: Qwen 1.5-7B · vLLM · FastAPI · Docker', stats: ['12× faster', 'EN + DE', 'On-premise'], github: 'https://github.com/rohan-patil-ai', image: 'preview/caira.svg' },
-    blackjack: { kicker: 'REINFORCEMENT LEARNING', title: 'Teaching an agent to play the odds.', body: 'Q-learning agent learns optimal blackjack policy. Monte Carlo, Double Q-Learning under realistic conditions.', stack: 'Stack: Python · NumPy · OpenAI Gym', stats: ['Q-table policy', 'Monte Carlo', 'Double Q'], github: 'https://github.com/rohan-patil-ai/Blackjack21', image: 'preview/blackjack.svg' }
+    hpylori: { kicker: 'MASTER\'S PROJECT / H.PYLORI DETECTION', title: 'Teaching AI to find cancer-causing bacteria in microscope slides.', summary: 'Deep learning pipeline with active learning loop.', body: 'Engineered hierarchical detection pipeline for H. pylori bacteria in whole slide pathology (WSI) images — detecting 5×5 pixel bacteria in 150K×60K pixel scans. YOLOv8 for initial detection, R-CNN for refinement, QuPath for annotation management. Implemented active learning loop: system flags uncertain patches, human reviews them, loop converges on high-confidence detections. Accuracy rose from 30% baseline (noisy initial labels) to 80% after active learning. Discovered and surfaced 1,000+ annotations missed by pathologists in original dataset. Published and awarded "Most Creative Research" at ICDD 2026.', stack: 'Stack: YOLOv8 · R-CNN · QuPath · Active Learning · Python · PyTorch', stats: ['30% → 80% accuracy', '1,000+ annotations', 'ICDD 2026 Award'], github: 'https://github.com/hxrshx/pylori-bacteria-repo', image: 'preview/hpylori.svg' },
+    'bmw-cairo': { kicker: 'BMW CAIRO HACKATHON / LESSONS LEARNED', title: 'AI that learns from every defect at the plant.', summary: 'Hybrid RAG for quality incidents and root causes.', body: 'Full-stack hybrid RAG platform built for BMW CAIRO Hackathon (October 17, 2025) to automate incident-to-insight pipeline. Manufacturing defects reported into system → GPT-4o analyzes incident data → generates structured lessons learned, preventive actions, and identifies root causes. Multi-source retrieval: internal SQLite vector search over historical incidents + department knowledge base + live web search for similar external cases. React 18 frontend with TypeScript, shadcn/ui for incident entry and analytics dashboard. Result: defect knowledge captured and searchable by all departments, reducing repeat failures and accelerating root-cause identification. Incident reporting → lessons learned insights in minutes instead of manual cross-team meetings.', stack: 'Stack: GPT-4o · SQLite Vector Search · FastAPI · React 18 · TypeScript · shadcn/ui', stats: ['GPT-4o', 'SQLite Vector Search', 'FastAPI + React'], github: 'https://github.com/rohan-patil-ai/BMW-Incidents-to-Lessons-AI', image: 'preview/bmw-cairo.png' },
+    viktor: { kicker: 'TUM.AI x VIKTOR.COM / EHL HACKATHON', title: 'One question. Right model. Lower cost.', summary: 'Explainable LLM router for cost-aware inference.', body: 'Offline LLM router built in 24 hours as part of TUM.ai team competing in European Hackathon League (EHL), solving challenge set by Viktor.com co-founder. System learns to route queries to smallest capable model without sacrificing quality. Semantic features: TF-IDF embeddings of query text capture complexity signal. Metadata features: token count, entity types, task type. Gradient Boosted Classifier trained on held-out routing decisions. Baseline approach (always use 70B model): $1.00 per query. Router-guided approach: $0.60 per query (−40% cost). Extended post-hackathon evaluation with better feature engineering: −60%+ cost savings while maintaining accuracy. Explainability: model outputs feature importance so operators understand why a query routes to a smaller model.', stack: 'Stack: RouteLLM · TF-IDF · Gradient Boosted Classifier · Python', stats: ['−40% baseline', '−60%+ extended', '24h build'], github: 'https://github.com/rohan-patil-ai', image: 'preview/viktor.svg' },
+    tunix: { kicker: 'GOOGLE TUNIX / TOP 3 MEDAL', title: 'Small model. Serious reasoning.', summary: 'Memory-efficient fine-tuning for small reasoning models.', body: 'Competed in Google Tunix Hackathon: "Reasoning with Small Language Models" among 400+ teams. Task: improve Gemma 2B performance on GSM8K math reasoning benchmark. Approach: GRPO (Group Relative Policy Optimization) fine-tuning to avoid catastrophic forgetting. Designed active review mechanism: maintain 1:1 ratio of new examples to historical examples during training — prevents model from overfitting to recent data and losing earlier learned reasoning patterns. Applied consensus voting post-training: ensemble predictions from 5 checkpoints → majority vote → 8–11% accuracy lift without additional training compute. Result: 71.3% accuracy on GSM8K (baseline Gemma 2B: ~38%). Top 3 medal out of 400+ competing teams. Key insight: small models benefit significantly from careful training discipline (active review) and ensemble methods (consensus voting), not just scale.', stack: 'Stack: Gemma 2B · GRPO · PEFT · LoRA · PyTorch', stats: ['71.3% GSM8K', 'Top 3 / 400+', '8–11% lift'], github: 'https://github.com/rohan-patil-ai/Google-Tunix-Hackathon', image: 'preview/tunix.png' },
+    caira: { kicker: 'THWS / ON-PREMISE RAG', title: 'AI mentor for incoming students.', summary: 'Privacy-first bilingual chatbot for international students.', body: 'CAIRA: on-premise RAG chatbot for Technische Hochschule Würzburg-Schweinfurt (THWS) international students. Requirement: documents remain on-campus, never sent to cloud services (privacy + compliance). Bilingual interface: English and German. System processes university administrative documents (admission requirements, course catalogs, housing, visa procedures) via FAISS vector index. Query → semantic search over docs → Qwen 1.5-7B generates contextual answer in student\'s language. Initial deployment: 60-second latency per query (inference bottleneck). Optimization: migrated to vLLM (vector LLM serving) for batched inference, wrapped behind FastAPI with Nginx reverse proxy. Result: <5 second latency (12× improvement). Bilingual support critical for growing international cohort; on-premise deployment ensures compliance with German data protection laws.', stack: 'Stack: Qwen 1.5-7B · vLLM · FastAPI · Docker · Nginx', stats: ['12× faster', 'EN + DE', 'On-premise'], github: 'https://github.com/rohan-patil-ai', image: 'preview/caira.svg' },
+    blackjack: { kicker: 'REINFORCEMENT LEARNING', title: 'Teaching an agent to play the odds.', summary: 'Tabular Q-learning and policy exploration in Blackjack.', body: 'Tabular reinforcement learning agent learns optimal Blackjack strategy through millions of simulated hands. State space: (player sum, dealer card showing, usable ace). Q-table learns value of each action (hit/stand) in each state. Three approaches implemented: (1) Monte Carlo: collect full episode trajectories, update values after episode ends — stable but slow. (2) Q-learning: online updates, bootstrap from next state — faster convergence. (3) Double Q-Learning: avoid overestimation bias in value updates by decoupling action selection from value evaluation. Agent converges on strategy that matches textbook Blackjack optimal play (hit on 12 vs dealer 3, stand on 17, etc.). Demonstrates exploration-exploitation tradeoff: early training includes epsilon-greedy exploration; later stages exploit learned policy. Key learning: even simple tabular methods reach near-optimal policies when state/action spaces are manageable.', stack: 'Stack: Python · NumPy · OpenAI Gym · Matplotlib', stats: ['Q-table policy', 'Monte Carlo', 'Double Q'], github: 'https://github.com/rohan-patil-ai/Blackjack21', image: 'preview/blackjack.svg' }
   };
 
   function setupCanvas(canvas) {
@@ -140,7 +147,7 @@
     started.add(key); drawers[key](canvas);
   }
 
-  function setupSkillsBubbles() {
+  function setupSkillsGraph() {
     const container = document.getElementById('skills-container');
     if (!container) return;
     const canvas = document.getElementById('skills-canvas');
@@ -150,45 +157,44 @@
     const w = container.clientWidth; const h = 400;
     canvas.width = w * dpr; canvas.height = h * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const cols = Math.max(3, Math.floor(w / 120));
-    const rows = Math.ceil(skills.length / cols);
-    const bubbles = skills.map((skill, i) => {
-      const col = i % cols;
-      const row = Math.floor(i / cols);
-      const baseX = (w / (cols + 1)) * (col + 1);
-      const baseY = (h / (rows + 1)) * (row + 1);
-      return { label: skill, x: baseX, y: baseY, baseX, baseY, r: 28, hover: false, dragging: false };
+    const nodes = skills.map((label, i) => {
+      const angle = (i / skills.length) * Math.PI * 2;
+      const r = Math.min(w, h) / 2.8;
+      return { label, x: w / 2 + r * Math.cos(angle), y: h / 2 + r * Math.sin(angle), r: 28, hover: false, cx: w / 2 + r * Math.cos(angle), cy: h / 2 + r * Math.sin(angle) };
     });
-    let dragging = null; let mouseX = 0; let mouseY = 0;
+    let hover = null;
     function draw() {
       ctx.fillStyle = 'rgba(5, 5, 5, 0.6)'; ctx.fillRect(0, 0, w, h);
       ctx.strokeStyle = GRID; ctx.lineWidth = 0.5;
       for (let x = 0; x <= w; x += 36) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
       for (let y = 0; y <= h; y += 36) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
-      bubbles.forEach((b) => {
-        if (dragging !== b && Math.abs(b.x - b.baseX) < 0.5 && Math.abs(b.y - b.baseY) < 0.5) { b.x = b.baseX; b.y = b.baseY; }
-        ctx.fillStyle = b.hover ? ACCENT : 'rgba(204,255,0,.2)';
-        ctx.strokeStyle = b.hover ? ACCENT : 'rgba(204,255,0,.4)';
-        ctx.lineWidth = b.hover ? 2 : 1.5;
-        ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-        ctx.fillStyle = b.hover ? '#050505' : 'rgba(240,240,240,.85)';
-        ctx.font = 'bold 12px "DM Mono"'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-        ctx.fillText(b.label, b.x, b.y);
+      skillConnections.forEach(([s1, s2]) => {
+        const n1 = nodes.find(n => n.label === s1);
+        const n2 = nodes.find(n => n.label === s2);
+        if (n1 && n2) {
+          ctx.strokeStyle = hover && (hover.label === s1 || hover.label === s2) ? ACCENT : 'rgba(204,255,0,.15)';
+          ctx.lineWidth = hover && (hover.label === s1 || hover.label === s2) ? 2 : 1;
+          ctx.beginPath(); ctx.moveTo(n1.x, n1.y); ctx.lineTo(n2.x, n2.y); ctx.stroke();
+        }
+      });
+      nodes.forEach((n) => {
+        ctx.fillStyle = n.hover ? ACCENT : 'rgba(204,255,0,.2)';
+        ctx.strokeStyle = n.hover ? ACCENT : 'rgba(204,255,0,.4)';
+        ctx.lineWidth = n.hover ? 2.5 : 1.5;
+        ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = n.hover ? '#050505' : 'rgba(240,240,240,.85)';
+        ctx.font = 'bold 11px "DM Mono"'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText(n.label, n.x, n.y);
       });
       requestAnimationFrame(draw);
     }
     draw();
-    canvas.addEventListener('mousedown', (e) => {
-      const rect = canvas.getBoundingClientRect(); mouseX = e.clientX - rect.left; mouseY = e.clientY - rect.top;
-      bubbles.forEach((b) => { const d = Math.hypot(mouseX - b.x, mouseY - b.y); if (d < b.r) dragging = b; });
-    });
     canvas.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect(); mouseX = e.clientX - rect.left; mouseY = e.clientY - rect.top;
-      bubbles.forEach((b) => { const d = Math.hypot(mouseX - b.x, mouseY - b.y); b.hover = d < b.r; });
-      if (dragging) { dragging.x = Math.max(dragging.r, Math.min(w - dragging.r, mouseX)); dragging.y = Math.max(dragging.r, Math.min(h - dragging.r, mouseY)); }
+      const rect = canvas.getBoundingClientRect(); const mx = e.clientX - rect.left; const my = e.clientY - rect.top;
+      hover = null;
+      nodes.forEach((n) => { const d = Math.hypot(mx - n.x, my - n.y); n.hover = d < n.r; if (n.hover) hover = n; });
     });
-    canvas.addEventListener('mouseup', () => { dragging = null; });
-    canvas.addEventListener('mouseleave', () => { dragging = null; bubbles.forEach((b) => b.hover = false); });
+    canvas.addEventListener('mouseleave', () => { nodes.forEach((n) => n.hover = false); hover = null; });
   }
 
   function setupMotion() {
@@ -245,11 +251,11 @@
 
   function setupResize() {
     let timer;
-    window.addEventListener('resize', () => { clearTimeout(timer); timer = setTimeout(() => { window.ScrollTrigger?.refresh(); setupSkillsBubbles(); }, 150); });
+    window.addEventListener('resize', () => { clearTimeout(timer); timer = setTimeout(() => { window.ScrollTrigger?.refresh(); setupSkillsGraph(); }, 150); });
   }
 
   setupMotion();
   setupModal();
-  setupSkillsBubbles();
+  setupSkillsGraph();
   setupResize();
 })();
