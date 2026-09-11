@@ -150,31 +150,45 @@
     const w = container.clientWidth; const h = 400;
     canvas.width = w * dpr; canvas.height = h * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const bubbles = skills.map(() => ({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - 0.5) * 2, vy: (Math.random() - 0.5) * 2, r: 30 + Math.random() * 20 }));
+    const cols = Math.max(3, Math.floor(w / 120));
+    const rows = Math.ceil(skills.length / cols);
+    const bubbles = skills.map((skill, i) => {
+      const col = i % cols;
+      const row = Math.floor(i / cols);
+      const baseX = (w / (cols + 1)) * (col + 1);
+      const baseY = (h / (rows + 1)) * (row + 1);
+      return { label: skill, x: baseX, y: baseY, baseX, baseY, r: 28, hover: false, dragging: false };
+    });
     let dragging = null; let mouseX = 0; let mouseY = 0;
     function draw() {
       ctx.fillStyle = 'rgba(5, 5, 5, 0.6)'; ctx.fillRect(0, 0, w, h);
       ctx.strokeStyle = GRID; ctx.lineWidth = 0.5;
       for (let x = 0; x <= w; x += 36) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
       for (let y = 0; y <= h; y += 36) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
-      bubbles.forEach((b, i) => {
-        if (dragging !== i) { b.x += b.vx; b.y += b.vy; if (b.x - b.r < 0 || b.x + b.r > w) b.vx *= -1; if (b.y - b.r < 0 || b.y + b.r > h) b.vy *= -1; }
-        ctx.fillStyle = dragging === i ? ACCENT : 'rgba(204,255,0,.2)'; ctx.strokeStyle = ACCENT; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-        ctx.fillStyle = dragging === i ? '#050505' : 'rgba(240,240,240,.7)'; ctx.font = '12px "DM Mono"'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-        const text = skills[i]; ctx.fillText(text, b.x, b.y);
+      bubbles.forEach((b) => {
+        if (dragging !== b && Math.abs(b.x - b.baseX) < 0.5 && Math.abs(b.y - b.baseY) < 0.5) { b.x = b.baseX; b.y = b.baseY; }
+        ctx.fillStyle = b.hover ? ACCENT : 'rgba(204,255,0,.2)';
+        ctx.strokeStyle = b.hover ? ACCENT : 'rgba(204,255,0,.4)';
+        ctx.lineWidth = b.hover ? 2 : 1.5;
+        ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = b.hover ? '#050505' : 'rgba(240,240,240,.85)';
+        ctx.font = 'bold 12px "DM Mono"'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText(b.label, b.x, b.y);
       });
       requestAnimationFrame(draw);
     }
     draw();
     canvas.addEventListener('mousedown', (e) => {
       const rect = canvas.getBoundingClientRect(); mouseX = e.clientX - rect.left; mouseY = e.clientY - rect.top;
-      bubbles.forEach((b, i) => { const d = Math.hypot(mouseX - b.x, mouseY - b.y); if (d < b.r) dragging = i; });
+      bubbles.forEach((b) => { const d = Math.hypot(mouseX - b.x, mouseY - b.y); if (d < b.r) dragging = b; });
     });
     canvas.addEventListener('mousemove', (e) => {
       const rect = canvas.getBoundingClientRect(); mouseX = e.clientX - rect.left; mouseY = e.clientY - rect.top;
-      if (dragging !== null) { bubbles[dragging].x = mouseX; bubbles[dragging].y = mouseY; }
+      bubbles.forEach((b) => { const d = Math.hypot(mouseX - b.x, mouseY - b.y); b.hover = d < b.r; });
+      if (dragging) { dragging.x = Math.max(dragging.r, Math.min(w - dragging.r, mouseX)); dragging.y = Math.max(dragging.r, Math.min(h - dragging.r, mouseY)); }
     });
-    canvas.addEventListener('mouseup', () => { if (dragging !== null) { bubbles[dragging].vx = (Math.random() - 0.5) * 3; bubbles[dragging].vy = (Math.random() - 0.5) * 3; dragging = null; } });
+    canvas.addEventListener('mouseup', () => { dragging = null; });
+    canvas.addEventListener('mouseleave', () => { dragging = null; bubbles.forEach((b) => b.hover = false); });
   }
 
   function setupMotion() {
