@@ -5,15 +5,6 @@
   const MUTED = 'rgba(240, 240, 240, 0.35)';
   const GRID = 'rgba(204, 255, 0, 0.12)';
 
-  const skills = ['Python', 'PyTorch', 'RAG', 'Neo4j', 'LLM Routing', 'Active Learning', 'GRPO', 'vLLM', 'FastAPI', 'Kubernetes', 'Docker', 'React', 'FAISS', 'Computer Vision', 'SQL'];
-  const skillConnections = [
-    ['Python', 'PyTorch'], ['Python', 'RAG'], ['Python', 'Computer Vision'],
-    ['PyTorch', 'Active Learning'], ['RAG', 'Neo4j'], ['RAG', 'FastAPI'],
-    ['Neo4j', 'Kubernetes'], ['LLM Routing', 'FastAPI'], ['GRPO', 'PyTorch'],
-    ['vLLM', 'FastAPI'], ['FastAPI', 'Docker'], ['Kubernetes', 'Docker'],
-    ['Computer Vision', 'Active Learning'], ['FAISS', 'RAG'], ['SQL', 'Neo4j']
-  ];
-
   const projectDetails = {
     hpylori: { kicker: 'MASTER\'S PROJECT / H.PYLORI DETECTION', title: 'Teaching AI to find cancer-causing bacteria in microscope slides.', summary: 'Deep learning pipeline with active learning loop.', body: 'Engineered hierarchical detection pipeline for H. pylori bacteria in whole slide pathology (WSI) images — detecting 5×5 pixel bacteria in 150K×60K pixel scans. YOLOv8 for initial detection, R-CNN for refinement, QuPath for annotation management. Implemented active learning loop: system flags uncertain patches, human reviews them, loop converges on high-confidence detections. Accuracy rose from 30% baseline (noisy initial labels) to 80% after active learning. Discovered and surfaced 1,000+ annotations missed by pathologists in original dataset. Published and awarded "Most Creative Research" at ICDD 2026.', stack: 'Stack: YOLOv8 · R-CNN · QuPath · Active Learning · Python · PyTorch', stats: ['30% → 80% accuracy', '1,000+ annotations', 'ICDD 2026 Award'], github: 'https://github.com/hxrshx/pylori-bacteria-repo', image: 'preview/hpylori.svg' },
     'bmw-cairo': { kicker: 'BMW CAIRO HACKATHON / LESSONS LEARNED', title: 'AI that learns from every defect at the plant.', summary: 'Hybrid RAG for quality incidents and root causes.', body: 'Full-stack hybrid RAG platform built for BMW CAIRO Hackathon (October 17, 2025) to automate incident-to-insight pipeline. Manufacturing defects reported into system → GPT-4o analyzes incident data → generates structured lessons learned, preventive actions, and identifies root causes. Multi-source retrieval: internal SQLite vector search over historical incidents + department knowledge base + live web search for similar external cases. React 18 frontend with TypeScript, shadcn/ui for incident entry and analytics dashboard. Result: defect knowledge captured and searchable by all departments, reducing repeat failures and accelerating root-cause identification. Incident reporting → lessons learned insights in minutes instead of manual cross-team meetings.', stack: 'Stack: GPT-4o · SQLite Vector Search · FastAPI · React 18 · TypeScript · shadcn/ui', stats: ['GPT-4o', 'SQLite Vector Search', 'FastAPI + React'], github: 'https://github.com/rohan-patil-ai/BMW-Incidents-to-Lessons-AI', image: 'preview/bmw-cairo.png' },
@@ -147,61 +138,6 @@
     started.add(key); drawers[key](canvas);
   }
 
-  function setupSkillsGraph() {
-    const container = document.getElementById('skills-container');
-    if (!container) return;
-    const canvas = document.getElementById('skills-canvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const dpr = window.devicePixelRatio || 1;
-    const w = container.clientWidth; const h = 400;
-    canvas.width = w * dpr; canvas.height = h * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const nodes = skills.map((label, i) => {
-      const x = Math.random() * (w * 0.7) + w * 0.15;
-      const y = Math.random() * (h * 0.7) + h * 0.15;
-      return { label, x, y, baseX: x, baseY: y, r: 28, hover: false, dragging: false, vx: 0, vy: 0 };
-    });
-    let dragging = null; let mouseX = 0; let mouseY = 0;
-    function draw() {
-      ctx.fillStyle = 'rgba(5, 5, 5, 0.6)'; ctx.fillRect(0, 0, w, h);
-      ctx.strokeStyle = GRID; ctx.lineWidth = 0.5;
-      for (let x = 0; x <= w; x += 36) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
-      for (let y = 0; y <= h; y += 36) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
-      skillConnections.forEach(([s1, s2]) => {
-        const n1 = nodes.find(n => n.label === s1);
-        const n2 = nodes.find(n => n.label === s2);
-        if (n1 && n2) {
-          ctx.strokeStyle = (dragging === n1 || dragging === n2 || n1.hover || n2.hover) ? ACCENT : 'rgba(204,255,0,.15)';
-          ctx.lineWidth = (dragging === n1 || dragging === n2 || n1.hover || n2.hover) ? 2 : 1;
-          ctx.beginPath(); ctx.moveTo(n1.x, n1.y); ctx.lineTo(n2.x, n2.y); ctx.stroke();
-        }
-      });
-      nodes.forEach((n) => {
-        ctx.fillStyle = n.hover ? ACCENT : 'rgba(204,255,0,.2)';
-        ctx.strokeStyle = n.hover ? ACCENT : 'rgba(204,255,0,.4)';
-        ctx.lineWidth = n.hover ? 2.5 : 1.5;
-        ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-        ctx.fillStyle = n.hover ? '#050505' : 'rgba(240,240,240,.9)';
-        ctx.font = 'bold 11px "DM Mono"'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-        ctx.fillText(n.label, n.x, n.y);
-      });
-      requestAnimationFrame(draw);
-    }
-    draw();
-    canvas.addEventListener('mousedown', (e) => {
-      const rect = canvas.getBoundingClientRect(); mouseX = e.clientX - rect.left; mouseY = e.clientY - rect.top;
-      nodes.forEach((n) => { const d = Math.hypot(mouseX - n.x, mouseY - n.y); if (d < n.r) dragging = n; });
-    });
-    canvas.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect(); mouseX = e.clientX - rect.left; mouseY = e.clientY - rect.top;
-      nodes.forEach((n) => { const d = Math.hypot(mouseX - n.x, mouseY - n.y); n.hover = d < n.r; });
-      if (dragging) { dragging.x = Math.max(dragging.r, Math.min(w - dragging.r, mouseX)); dragging.y = Math.max(dragging.r, Math.min(h - dragging.r, mouseY)); }
-    });
-    canvas.addEventListener('mouseup', () => { dragging = null; });
-    canvas.addEventListener('mouseleave', () => { nodes.forEach((n) => n.hover = false); dragging = null; });
-  }
-
   function setupMotion() {
     if (window.gsap && window.ScrollTrigger) {
       gsap.registerPlugin(ScrollTrigger);
@@ -256,11 +192,10 @@
 
   function setupResize() {
     let timer;
-    window.addEventListener('resize', () => { clearTimeout(timer); timer = setTimeout(() => { window.ScrollTrigger?.refresh(); setupSkillsGraph(); }, 150); });
+    window.addEventListener('resize', () => { clearTimeout(timer); timer = setTimeout(() => { window.ScrollTrigger?.refresh(); }, 150); });
   }
 
   setupMotion();
   setupModal();
-  setupSkillsGraph();
   setupResize();
 })();

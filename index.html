@@ -165,15 +165,24 @@
         <section id="experience" class="about section-shell" aria-labelledby="experience-title">
             <div class="section-intro reveal"><p class="eyebrow">02 / EXPERIENCE</p><h2 id="experience-title">Where I've<br><em>worked.</em></h2></div>
             <div class="experience-list">
-                <article class="job-card reveal" data-company="BMW">
-                    <div class="job-header"><span class="job-period">10/2026 – Present</span><h3>Master's Thesis Student</h3><p class="job-company">BMW Group AG · Munich</p></div>
-                    <p class="job-description">Beginning Master's thesis at BMW Group in October 2026, focused on applied AI systems for production data and knowledge retrieval.</p>
-                    <div class="job-stack">Applied AI · Knowledge Retrieval · Graph Data</div>
-                </article>
-                <article class="job-card reveal" data-company="BMW">
-                    <div class="job-header"><span class="job-period">03/2026 – 09/2026</span><h3>AI Engineer Intern</h3><p class="job-company">BMW Group AG · Munich</p></div>
-                    <p class="job-description">Engineered GraphDB-based multi-agent retrieval on Neo4j (10M+ nodes). Built TF-IDF clustering at ~96% F1 and migrated internal tooling from Palantir to self-hosted Kubernetes.</p>
-                    <div class="job-stack">Neo4j · TF-IDF · Kubernetes · ArgoCD · Docker</div>
+                <article class="job-card job-group reveal" data-group="BMW">
+                    <div class="job-company-head">
+                        <span class="job-company-badge">BMW GROUP AG · MUNICH</span>
+                        <span class="job-period">03/2026 – Present</span>
+                    </div>
+                    <div class="job-role-list">
+                        <div class="job-role current">
+                            <div class="job-role-row"><span class="job-period">10/2026 – Present</span><h3>Master's Thesis Student</h3></div>
+                            <p class="job-description">Master's thesis on applied AI systems for production data and knowledge retrieval — continuing internship research as a sponsored thesis project at BMW Group.</p>
+                            <div class="job-stack">Applied AI · Knowledge Retrieval · Graph Data</div>
+                        </div>
+                        <div class="job-promotion"><span>INTERN → THESIS</span></div>
+                        <div class="job-role">
+                            <div class="job-role-row"><span class="job-period">03/2026 – 09/2026</span><h3>AI Engineer Intern</h3></div>
+                            <p class="job-description">Engineered GraphDB-based multi-agent retrieval on Neo4j (10M+ nodes). Built TF-IDF clustering at ~96% F1 grouping defects and supplier complaints. Migrated internal tooling from Palantir to self-hosted Kubernetes.</p>
+                            <div class="job-stack">Neo4j · TF-IDF · Kubernetes · ArgoCD · Docker</div>
+                        </div>
+                    </div>
                 </article>
                 <article class="job-card reveal">
                     <div class="job-header"><span class="job-period">01/2026 – 02/2026</span><h3>Web Automation Engineer</h3><p class="job-company">Julius Maximilians Universität Würzburg</p></div>
@@ -191,8 +200,23 @@
         <section id="skills" class="skills section-shell" aria-labelledby="skills-title">
             <div class="section-intro reveal"><p class="eyebrow">03 / TOOLKIT</p><h2 id="skills-title">How I build.</h2>
                 <p class="intro-copy">A connected toolkit: models, retrieval, serving, and infrastructure working as one system.</p></div>
-            <div class="skills-bubble-container reveal" id="skills-container">
-                <canvas id="skills-canvas" aria-label="Interactive skills visualization"></canvas>
+            <div class="skills-grid reveal">
+                <div class="skill-group">
+                    <h3>MODELS &amp; LLM</h3>
+                    <div class="skill-cloud"><span class="skill-pill">RAG</span><span class="skill-pill">Fine-tuning (LoRA, GRPO)</span><span class="skill-pill">LLM Routing</span><span class="skill-pill">Active Learning</span><span class="skill-pill">Prompt Engineering</span></div>
+                </div>
+                <div class="skill-group">
+                    <h3>RETRIEVAL &amp; DATA</h3>
+                    <div class="skill-cloud"><span class="skill-pill">Neo4j Graph Retrieval</span><span class="skill-pill">FAISS</span><span class="skill-pill">SQLite Vector Search</span><span class="skill-pill">TF-IDF</span><span class="skill-pill">SQL</span></div>
+                </div>
+                <div class="skill-group">
+                    <h3>DEPLOY &amp; ML-OPS</h3>
+                    <div class="skill-cloud"><span class="skill-pill">Kubernetes</span><span class="skill-pill">Docker</span><span class="skill-pill">ArgoCD</span><span class="skill-pill">CI/CD (GitOps)</span><span class="skill-pill">vLLM</span><span class="skill-pill">FastAPI</span><span class="skill-pill">Nginx</span></div>
+                </div>
+                <div class="skill-group">
+                    <h3>VISION &amp; CORE</h3>
+                    <div class="skill-cloud"><span class="skill-pill">PyTorch</span><span class="skill-pill">YOLOv8</span><span class="skill-pill">R-CNN</span><span class="skill-pill">OpenCV</span><span class="skill-pill">Python</span><span class="skill-pill">C++</span><span class="skill-pill">React · TypeScript</span></div>
+                </div>
             </div>
         </section>
 
