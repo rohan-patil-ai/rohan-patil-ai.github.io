@@ -158,11 +158,11 @@
     canvas.width = w * dpr; canvas.height = h * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     const nodes = skills.map((label, i) => {
-      const angle = (i / skills.length) * Math.PI * 2;
-      const r = Math.min(w, h) / 2.8;
-      return { label, x: w / 2 + r * Math.cos(angle), y: h / 2 + r * Math.sin(angle), r: 28, hover: false, cx: w / 2 + r * Math.cos(angle), cy: h / 2 + r * Math.sin(angle) };
+      const x = Math.random() * (w * 0.7) + w * 0.15;
+      const y = Math.random() * (h * 0.7) + h * 0.15;
+      return { label, x, y, baseX: x, baseY: y, r: 28, hover: false, dragging: false, vx: 0, vy: 0 };
     });
-    let hover = null;
+    let dragging = null; let mouseX = 0; let mouseY = 0;
     function draw() {
       ctx.fillStyle = 'rgba(5, 5, 5, 0.6)'; ctx.fillRect(0, 0, w, h);
       ctx.strokeStyle = GRID; ctx.lineWidth = 0.5;
@@ -172,8 +172,8 @@
         const n1 = nodes.find(n => n.label === s1);
         const n2 = nodes.find(n => n.label === s2);
         if (n1 && n2) {
-          ctx.strokeStyle = hover && (hover.label === s1 || hover.label === s2) ? ACCENT : 'rgba(204,255,0,.15)';
-          ctx.lineWidth = hover && (hover.label === s1 || hover.label === s2) ? 2 : 1;
+          ctx.strokeStyle = (dragging === n1 || dragging === n2 || n1.hover || n2.hover) ? ACCENT : 'rgba(204,255,0,.15)';
+          ctx.lineWidth = (dragging === n1 || dragging === n2 || n1.hover || n2.hover) ? 2 : 1;
           ctx.beginPath(); ctx.moveTo(n1.x, n1.y); ctx.lineTo(n2.x, n2.y); ctx.stroke();
         }
       });
@@ -182,19 +182,24 @@
         ctx.strokeStyle = n.hover ? ACCENT : 'rgba(204,255,0,.4)';
         ctx.lineWidth = n.hover ? 2.5 : 1.5;
         ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-        ctx.fillStyle = n.hover ? '#050505' : 'rgba(240,240,240,.85)';
+        ctx.fillStyle = n.hover ? '#050505' : 'rgba(240,240,240,.9)';
         ctx.font = 'bold 11px "DM Mono"'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.fillText(n.label, n.x, n.y);
       });
       requestAnimationFrame(draw);
     }
     draw();
-    canvas.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect(); const mx = e.clientX - rect.left; const my = e.clientY - rect.top;
-      hover = null;
-      nodes.forEach((n) => { const d = Math.hypot(mx - n.x, my - n.y); n.hover = d < n.r; if (n.hover) hover = n; });
+    canvas.addEventListener('mousedown', (e) => {
+      const rect = canvas.getBoundingClientRect(); mouseX = e.clientX - rect.left; mouseY = e.clientY - rect.top;
+      nodes.forEach((n) => { const d = Math.hypot(mouseX - n.x, mouseY - n.y); if (d < n.r) dragging = n; });
     });
-    canvas.addEventListener('mouseleave', () => { nodes.forEach((n) => n.hover = false); hover = null; });
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect(); mouseX = e.clientX - rect.left; mouseY = e.clientY - rect.top;
+      nodes.forEach((n) => { const d = Math.hypot(mouseX - n.x, mouseY - n.y); n.hover = d < n.r; });
+      if (dragging) { dragging.x = Math.max(dragging.r, Math.min(w - dragging.r, mouseX)); dragging.y = Math.max(dragging.r, Math.min(h - dragging.r, mouseY)); }
+    });
+    canvas.addEventListener('mouseup', () => { dragging = null; });
+    canvas.addEventListener('mouseleave', () => { nodes.forEach((n) => n.hover = false); dragging = null; });
   }
 
   function setupMotion() {
